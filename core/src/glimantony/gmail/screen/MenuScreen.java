@@ -3,6 +3,7 @@ package glimantony.gmail.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -36,6 +37,24 @@ public class MenuScreen extends Base2DScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        update(delta);
+        draw();
+    }
+
+    /**
+     * Метод как подметод render(float delta)
+     * @param delta
+     */
+    public void update(float delta){
+        star.update(delta);
+    }
+
+    /**
+     * Метод как подметод render(float delta)
+     * Отвечает за всю отресовку
+     */
+    public void draw(){
+
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

@@ -24,11 +24,32 @@ public class Star extends Sprite {
         speed.set(Rnd.nextFloat(-0.005f, 0.005f), Rnd.nextFloat(-0.5f, -0.1f)); //звежды летт вниз
     }
 
+    /**
+     * Используем метод для движения звезды
+     * @param delta
+     */
+    @Override
+    public void update(float delta) {
+        pos.mulAdd(speed, delta); //mulAdd() - сложение в-ов и умножение на скаляр (привязываем движение к кадру)
+        checkAndHandleBounds(); //все время проверяем
+    }
+
     @Override
     public void resize(Rect worldBounds) {
         this.worldBounds = worldBounds;
         float posX = Rnd.nextFloat(worldBounds.getLeft(), worldBounds.getRight()); //звезда сгенерируется в произвольм месте на нашем поле
         float posY = Rnd.nextFloat(worldBounds.getBottom(), worldBounds.getTop()); //звезда сгенерируется в произвольм месте на нашем поле
         pos.set(posX, posY);
+    }
+
+    /**
+     * Проверка условия, чтобы звезда не вылетала за пределы экрана
+     */
+    private void checkAndHandleBounds(){
+        if (getRight() < worldBounds.getLeft()) setLeft(worldBounds.getRight()); //звезда улетела влево, появилась справа
+        if (getLeft() > worldBounds.getRight()) setRight(worldBounds.getLeft());
+        if (getTop() < worldBounds.getBottom()) setBottom(worldBounds.getTop());
+        if (getBottom() > worldBounds.getTop()) setTop(worldBounds.getBottom());
+
     }
 }
