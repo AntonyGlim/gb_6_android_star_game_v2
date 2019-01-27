@@ -45,6 +45,13 @@ public class Base2DScreen implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) { //Изменение размеров окна приложения
         System.out.println("resize() : width = " + width + "; height = " + height); //залогируем для информации о вызове метода
+        screenBounds.setSize(width, height);
+        screenBounds.setLeft(0);
+        screenBounds.setBottom(0);
+
+        float aspect = width / (float) height; //коэфф. для перерасчета координат мира
+        worldBounds.setHeight(1f);  //высота всегда 1f
+        worldBounds.setWidth(1f * aspect); //перерасчитывается из-за ширины экрана
     }
 
     @Override
