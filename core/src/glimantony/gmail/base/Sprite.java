@@ -2,6 +2,7 @@ package glimantony.gmail.base;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 import glimantony.gmail.math.Rect;
 
@@ -11,6 +12,7 @@ import glimantony.gmail.math.Rect;
  * В Rect будем оборачивать текстуры;
  */
 public class Sprite extends Rect {
+
     protected float angle; //угол поворота
     protected float scale = 1f; //угол поворота
     protected TextureRegion[] regions; //массив текстур для атласа
@@ -26,7 +28,53 @@ public class Sprite extends Rect {
         regions[0] = region;
     }
 
-    //Рисование самого себя. Отрисовка каждого о-та реализуется в самом о-те
+    /**
+     * Метод для пересчета ширины, в зависимости от высоты
+     */
+    public void setHeightProportion(float height){
+        setHeight(height);
+        float aspect = regions[frame].getRegionWidth() / (float) regions[frame].getRegionHeight();
+        setWidth(height * aspect);
+    }
+
+    /**
+     * Определение границ мира
+     * @param worldBounds - границы мира
+     */
+    public void resize(Rect worldBounds){
+    }
+
+    /**
+     * Метод для реализации движений и прочего экшена
+     * @param delta
+     */
+    public void update(float delta){
+    }
+
+    /**
+     * Коснулись экрана
+     * @param touch - принимает на вход координаты в мировой си-ме
+     * @param pointer
+     * @return
+     */
+    public boolean touchDown(Vector2 touch, int pointer) { //коснулись экрана
+        return false;
+    }
+
+    /**
+     * Отпустили экран
+     * @param touch - принимает на вход координаты в мировой си-ме
+     * @param pointer
+     * @return
+     */
+    public boolean touchUp(Vector2 touch, int pointer) { //коснулись экрана
+        return false;
+    }
+
+    /**
+     * Рисование самого себя. Отрисовка каждого о-та реализуется в самом о-те
+     * @param batch
+     */
     public void draw(SpriteBatch batch){
         batch.draw(
                 regions[frame], //номер региона в текущем кадре
@@ -38,4 +86,11 @@ public class Sprite extends Rect {
         );
     }
 
+    public float getAngle() {
+        return angle;
+    }
+
+    public float getScale() {
+        return scale;
+    }
 }
