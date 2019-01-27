@@ -20,10 +20,7 @@ public class MenuScreen extends Base2DScreen {
     Texture background;
 
     Vector2 imgPosition; //позицыя картинки
-    Vector2 imgSpeed; //скорость картинки
 
-    Vector2 userTouch; //координаты, куда нажал пользователь
-    Vector2 userTouchCopy; //координаты, куда нажал пользователь (копия для метода render)
 
     @Override
     public void show() { //проводим всю инициализацию
@@ -33,9 +30,7 @@ public class MenuScreen extends Base2DScreen {
         background = new Texture("backgrounds/spase_stars_background.jpg");
 
         imgPosition = new Vector2(0, 0);
-        imgSpeed = new Vector2(0, 0);
-        userTouch = new Vector2(0, 0);
-        userTouchCopy = new Vector2(0, 0);
+
     }
 
     @Override
@@ -43,17 +38,6 @@ public class MenuScreen extends Base2DScreen {
         super.render(delta);
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        /*Если расстояние между картинкой и местом нажатия ЛКМ больше в-ра ск-ти
-        * userTouch.cpy() - создает новые экземпляры, в методе render он не допустим.
-        * Вместо него используем userTouchCopy*/
-        userTouchCopy.set(userTouch);
-        if (userTouchCopy.sub(imgPosition).len() > V_LEN){
-            imgPosition.add(imgSpeed); //изменение позиции на величину скорости
-        }
-        else {
-            imgPosition.set(userTouch); //картинка остановиться в указанных координатах
-        }
 
         batch.begin();
         batch.draw(background, 0, 0);
@@ -77,8 +61,6 @@ public class MenuScreen extends Base2DScreen {
                 "; screenY = " + (Gdx.graphics.getHeight() - screenY) +
                 "; pointer = " + pointer +
                 "; button = " + button); //залогируем для информации о вызове метода
-        userTouch.set(screenX, (Gdx.graphics.getHeight() - screenY)); //запоминаем куда нажал пользователь
-        imgSpeed.set(userTouch.cpy().sub(imgPosition).setLength(V_LEN)); //устанавливаем вектор скорости
         return super.touchDown(screenX, screenY, pointer, button);
     }
 }
