@@ -3,6 +3,9 @@ package glimantony.gmail.base;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.math.Matrix4;
+
+import glimantony.gmail.math.Rect;
 
 /**
  * Базовый класс в котором храниться поведение всех прочих экранов.
@@ -15,12 +18,23 @@ import com.badlogic.gdx.Screen;
 
 public class Base2DScreen implements Screen, InputProcessor {
 
+    private Rect screenBounds; //Наш экран, граница оласти рисования в пикселях
+    private Rect worldBounds; //Система координат игрового мира (высота 1f и ширина 1f*acpect
+    private Rect glBounds; //Квадрат OpenGL куда мы проецируемся (2f на 2f) границы мира
+
+    private Matrix4 worldToGl; //матрица перевода координат из мировой си-мы коорд-т в OpenGL
+
 //Методы относятся к interface Screen (методы для отрисовки экрана)
     @Override
     public void show() { //Показать экран
         System.out.println("show()"); //залогируем для информации о вызове метода
         Gdx.input.setInputProcessor(this); //изменение инпут процессора на этот экран
 
+        this.screenBounds = new Rect();
+        this.worldBounds = new Rect();
+        this.glBounds = new Rect(0, 0, 1f, 1f); //сразу инициализируем
+
+        this.worldToGl = new Matrix4();
     }
 
     @Override
