@@ -19,6 +19,7 @@ public class MenuScreen extends Base2DScreen {
     Texture background;
 
     Vector2 imgPosition; //позицыя картинки
+    Vector2 imgSpeed; //скорость картинки
 
 
     @Override
@@ -28,6 +29,7 @@ public class MenuScreen extends Base2DScreen {
         background = new Texture("backgrounds/spase_stars_background.jpg");
 
         imgPosition = new Vector2(0, 0);
+        imgSpeed = new Vector2(0.001f, 0.001f);
 
     }
 
@@ -37,12 +39,12 @@ public class MenuScreen extends Base2DScreen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-
         batch.begin();
         batch.draw(background, -0.5f, -0.5f, 1f, 1f); //с шириной и высотой картинки
-        batch.draw(img, 0, 0, 0.5f, 0.5f); //с шириной и высотой картинки
+        batch.draw(img, imgPosition.x, imgPosition.y, 0.5f, 0.5f); //с шириной и высотой картинки
         batch.end();
+
+        imgPosition.add(imgSpeed);
 
     }
 
