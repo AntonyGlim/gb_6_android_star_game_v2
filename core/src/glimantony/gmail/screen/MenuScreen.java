@@ -15,7 +15,6 @@ public class MenuScreen extends Base2DScreen {
 
     public static final float V_LEN = 0.5f; //величина вектора скорости
 
-    SpriteBatch batch;
     Texture img;
     Texture background;
 
@@ -25,16 +24,6 @@ public class MenuScreen extends Base2DScreen {
     @Override
     public void show() { //проводим всю инициализацию
         super.show();
-        batch = new SpriteBatch();
-
-
-        /*
-        * getProjectionMatrix() - вернет текущую матрицу преобразований
-        * idt() - преобразует ее в единичную М-цу. С этого момента batch не преобразовывает
-        * координаты в пиксельную форму, а используются координаты OpenGL
-        */
-        batch.getProjectionMatrix().idt();
-
         img = new Texture("badlogic.jpg");
         background = new Texture("backgrounds/spase_stars_background.jpg");
 

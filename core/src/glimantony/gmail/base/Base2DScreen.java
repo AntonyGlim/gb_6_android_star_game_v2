@@ -3,6 +3,7 @@ package glimantony.gmail.base;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 
 import glimantony.gmail.math.Rect;
@@ -18,6 +19,8 @@ import glimantony.gmail.math.Rect;
 
 public class Base2DScreen implements Screen, InputProcessor {
 
+    protected SpriteBatch batch; //перенесли его из MenuScreen
+
     private Rect screenBounds; //Наш экран, граница оласти рисования в пикселях
     private Rect worldBounds; //Система координат игрового мира (высота 1f и ширина 1f*acpect
     private Rect glBounds; //Квадрат OpenGL куда мы проецируемся (2f на 2f) границы мира
@@ -29,6 +32,8 @@ public class Base2DScreen implements Screen, InputProcessor {
     public void show() { //Показать экран
         System.out.println("show()"); //залогируем для информации о вызове метода
         Gdx.input.setInputProcessor(this); //изменение инпут процессора на этот экран
+
+        batch = new SpriteBatch(); //перенесли его из MenuScreen (он нужен во многих экранах)
 
         this.screenBounds = new Rect();
         this.worldBounds = new Rect();
