@@ -20,7 +20,7 @@ import glimantony.gmail.math.Rect;
  * Необходимо помнить, что координаты системы событий и системы отрисовки - разные
  */
 
-public class Base2DScreen implements Screen, InputProcessor {
+public abstract class Base2DScreen implements Screen, InputProcessor {
 
     protected SpriteBatch batch; //перенесли его из MenuScreen
 
@@ -72,6 +72,11 @@ public class Base2DScreen implements Screen, InputProcessor {
         batch.setProjectionMatrix(worldToGl); //устанавливаем свою матрицу перехода координат
 
         MatrixUtils.calcTransitionMatrix(screenToWorld, screenBounds, worldBounds); //рассчит. матрицу для перевода пользовательского тача к си-ме координат мира
+        resize(worldBounds); //вызываем перегруженый метод
+    }
+
+    public void resize(Rect worldBounds) { //Изменение размеров окна приложения на вход - границы мира
+
     }
 
     @Override
