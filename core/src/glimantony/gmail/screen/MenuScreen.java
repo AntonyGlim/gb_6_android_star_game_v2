@@ -49,8 +49,8 @@ public class MenuScreen extends Base2DScreen {
 
 
         batch.begin();
-        batch.draw(background, 0, 0);
-        batch.draw(img, imgPosition.x, imgPosition.y);
+        batch.draw(background, -1f, -1f, 2f, 2f);
+        batch.draw(img, imgPosition.x, imgPosition.y, 1f, 1f); //с шириной и высотой картинки
         batch.end();
 
     }
