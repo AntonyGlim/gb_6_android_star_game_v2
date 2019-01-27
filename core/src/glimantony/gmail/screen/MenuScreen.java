@@ -26,6 +26,13 @@ public class MenuScreen extends Base2DScreen {
     public void show() { //проводим всю инициализацию
         super.show();
         batch = new SpriteBatch();
+
+        /*
+        * getProjectionMatrix() - вернет текущую матрицу преобразований
+        * idt() - преобразует ее в единичную М-цу. С этого момента batch не преобразовывает
+        * координаты в пиксельную форму, а используются координаты OpenGL*/
+        batch.getProjectionMatrix().idt();
+
         img = new Texture("badlogic.jpg");
         background = new Texture("backgrounds/spase_stars_background.jpg");
 
@@ -38,6 +45,8 @@ public class MenuScreen extends Base2DScreen {
         super.render(delta);
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
 
         batch.begin();
         batch.draw(background, 0, 0);
