@@ -40,15 +40,14 @@ public class MenuScreen extends Base2DScreen {
 
 
         batch.begin();
-        batch.draw(background, -1f, -1f, 2f, 2f); //с шириной и высотой картинки
-        batch.draw(img, imgPosition.x, imgPosition.y, 1f, 1f); //с шириной и высотой картинки
+        batch.draw(background, -0.5f, -0.5f, 1f, 1f); //с шириной и высотой картинки
+        batch.draw(img, 0, 0, 0.5f, 0.5f); //с шириной и высотой картинки
         batch.end();
 
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
         img.dispose();
         super.dispose(); //Вызывается в конце
     }

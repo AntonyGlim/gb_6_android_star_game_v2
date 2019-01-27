@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 
+import glimantony.gmail.math.MatrixUtils;
 import glimantony.gmail.math.Rect;
 
 /**
@@ -40,6 +41,7 @@ public class Base2DScreen implements Screen, InputProcessor {
         this.glBounds = new Rect(0, 0, 1f, 1f); //сразу инициализируем
 
         this.worldToGl = new Matrix4();
+
     }
 
     @Override
@@ -54,9 +56,13 @@ public class Base2DScreen implements Screen, InputProcessor {
         screenBounds.setLeft(0);
         screenBounds.setBottom(0);
 
+        //перерасчет производиться при каждом изменении ширины и высоты экрана
         float aspect = width / (float) height; //коэфф. для перерасчета координат мира
         worldBounds.setHeight(1f);  //высота всегда 1f
         worldBounds.setWidth(1f * aspect); //перерасчитывается из-за ширины экрана
+
+        MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds, glBounds); //расчитываем worldToGl
+        batch.setProjectionMatrix(worldToGl); //устанавливаем свою матрицу перехода координат
     }
 
     @Override
@@ -78,6 +84,7 @@ public class Base2DScreen implements Screen, InputProcessor {
     @Override
     public void dispose() { //освобождаем ресурсы (вызываем из hide())
         System.out.println("dispose()"); //залогируем для информации о вызове метода
+        batch.dispose();
     }
 
 

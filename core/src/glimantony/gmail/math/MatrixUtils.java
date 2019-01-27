@@ -6,6 +6,9 @@ import com.badlogic.gdx.math.Matrix4;
 
 /**
  * Утилита для работы с матрицами
+ * Класс предназначен для расчета матриц. В нашем проекте мы используем его
+ * для расчета матриц преобразований
+ *
  * Автор: Алексей Кутепов
  */
 public class MatrixUtils {
@@ -16,8 +19,8 @@ public class MatrixUtils {
     /**
      * Расчёт матрицы перехода 4x4
      * @param mat итоговая матрица преобразований
-     * @param src исходный квадрат
-     * @param dst итоговый квадрат
+     * @param src исходный квадрат (из которого проецируемся)
+     * @param dst итоговый квадрат (в который проецируемся)
      */
     public static void calcTransitionMatrix(Matrix4 mat, Rect src, Rect dst) {
         float scaleX = dst.getWidth() / src.getWidth();
@@ -28,8 +31,8 @@ public class MatrixUtils {
     /**
      * Расчёт матрицы перехода 3x3
      * @param mat итоговая матрица преобразований
-     * @param src исходный квадрат
-     * @param dst итоговый квадрат
+     * @param src исходный квадрат (из которого проецируемся)
+     * @param dst итоговый квадрат (в который проецируемся)
      */
     public static void calcTransitionMatrix(Matrix3 mat, Rect src, Rect dst) {
         float scaleX = dst.getWidth() / src.getWidth();
