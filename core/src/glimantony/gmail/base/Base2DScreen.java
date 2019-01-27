@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 
 import glimantony.gmail.math.MatrixUtils;
 import glimantony.gmail.math.Rect;
@@ -27,6 +29,8 @@ public class Base2DScreen implements Screen, InputProcessor {
     private Rect glBounds; //Квадрат OpenGL куда мы проецируемся (2f на 2f) границы мира
 
     private Matrix4 worldToGl; //матрица перевода координат из мировой си-мы коорд-т в OpenGL
+    private Matrix3 screenToWorld; //матрица перевода из си-мы событий в worldBounds
+    private Vector2 touch; //Вспомогательный вектор для screenToWorld (в него помещаются коорд-ты нажатия ЛКМ)
 
 //Методы относятся к interface Screen (методы для отрисовки экрана)
     @Override
@@ -41,6 +45,9 @@ public class Base2DScreen implements Screen, InputProcessor {
         this.glBounds = new Rect(0, 0, 1f, 1f); //сразу инициализируем
 
         this.worldToGl = new Matrix4();
+        this.screenToWorld = new Matrix3();
+        touch = new Vector2();
+
 
     }
 
@@ -63,6 +70,8 @@ public class Base2DScreen implements Screen, InputProcessor {
 
         MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds, glBounds); //расчитываем worldToGl
         batch.setProjectionMatrix(worldToGl); //устанавливаем свою матрицу перехода координат
+
+        MatrixUtils.calcTransitionMatrix(screenToWorld, screenBounds, worldBounds); //рассчит. матрицу для перевода пользовательского тача к си-ме координат мира
     }
 
     @Override
@@ -114,6 +123,21 @@ public class Base2DScreen implements Screen, InputProcessor {
                 "; screenY = " + screenY +
                 "; pointer = " + pointer +
                 "; button = " + button); //залогируем для информации о вызове метода
+        touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld); //получаем вектор в пикселях и преобразовываем к мировым координатам
+        touchDown(touch, pointer);
+        return false;
+    }
+
+    /**
+     * Перегруженый метод touchDown
+     * @param touch - принимает на вход координаты в мировой си-ме
+     * @param pointer
+     * @return
+     */
+    public boolean touchDown(Vector2 touch, int pointer) { //коснулись экрана
+        System.out.println("touchDown() (reload) : touch.x = " + touch.x +
+                "; touch.y = " + touch.y +
+                "; pointer = " + pointer); //залогируем для информации о вызове метода
         return false;
     }
 
@@ -123,6 +147,22 @@ public class Base2DScreen implements Screen, InputProcessor {
                 "; screenY = " + screenY +
                 "; pointer = " + pointer +
                 "; button = " + button); //залогируем для информации о вызове метода
+        touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld); //получаем вектор в пикселях и преобразовываем к мировым координатам
+        touchUp(touch, pointer);
+        return false;
+    }
+
+    /**
+     * Перегруженый метод touchUp
+     * @param touch - принимает на вход координаты в мировой си-ме
+     * @param pointer
+     * @return
+     */
+    public boolean touchUp(Vector2 touch, int pointer) { //коснулись экрана
+        System.out.println("touchUp() (reload) : touch.x = " + touch.x +
+                "; touch.y = " + touch.y +
+                "; pointer = " + pointer); //залогируем для информации о вызове метода
+
         return false;
     }
 
@@ -131,6 +171,22 @@ public class Base2DScreen implements Screen, InputProcessor {
         System.out.println("touchDragged() : screenX = " + screenX +
                 "; screenY = " + screenY +
                 "; pointer = " + pointer); //залогируем для информации о вызове метода
+        touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld); //получаем вектор в пикселях и преобразовываем к мировым координатам
+        touchDragged(touch, pointer);
+        return false;
+    }
+
+    /**
+     * Перегруженый метод touchDragged
+     * @param touch - принимает на вход координаты в мировой си-ме
+     * @param pointer
+     * @return
+     */
+    public boolean touchDragged(Vector2 touch, int pointer) { //коснулись экрана
+        System.out.println("touchDragged() (reload) : touch.x = " + touch.x +
+                "; touch.y = " + touch.y +
+                "; pointer = " + pointer); //залогируем для информации о вызове метода
+
         return false;
     }
 
