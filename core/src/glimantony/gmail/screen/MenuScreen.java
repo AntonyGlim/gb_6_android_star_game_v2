@@ -27,10 +27,12 @@ public class MenuScreen extends Base2DScreen {
         super.show();
         batch = new SpriteBatch();
 
+
         /*
         * getProjectionMatrix() - вернет текущую матрицу преобразований
         * idt() - преобразует ее в единичную М-цу. С этого момента batch не преобразовывает
-        * координаты в пиксельную форму, а используются координаты OpenGL*/
+        * координаты в пиксельную форму, а используются координаты OpenGL
+        */
         batch.getProjectionMatrix().idt();
 
         img = new Texture("badlogic.jpg");
@@ -49,7 +51,7 @@ public class MenuScreen extends Base2DScreen {
 
 
         batch.begin();
-        batch.draw(background, -1f, -1f, 2f, 2f);
+        batch.draw(background, -1f, -1f, 2f, 2f); //с шириной и высотой картинки
         batch.draw(img, imgPosition.x, imgPosition.y, 1f, 1f); //с шириной и высотой картинки
         batch.end();
 
