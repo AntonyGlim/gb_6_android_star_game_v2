@@ -52,14 +52,8 @@ public class MenuScreen extends Base2DScreen {
         super.dispose(); //Вызывается в конце
     }
 
-    //Переопределили метод так, чтобы получить координаты системы событий
-    // в соответствии с координатами системы отрисовки
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("touchDown() (MenuScreen): screenX = " + screenX +
-                "; screenY = " + (Gdx.graphics.getHeight() - screenY) +
-                "; pointer = " + pointer +
-                "; button = " + button); //залогируем для информации о вызове метода
-        return super.touchDown(screenX, screenY, pointer, button);
+    public boolean touchDown(Vector2 touch, int pointer) {
+        return super.touchDown(touch, pointer);
     }
 }
