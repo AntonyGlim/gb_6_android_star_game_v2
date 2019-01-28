@@ -12,6 +12,7 @@ import glimantony.gmail.math.Rect;
 import glimantony.gmail.sprites.Background;
 import glimantony.gmail.sprites.Star;
 import glimantony.gmail.sprites.menu.ButtonExit;
+import glimantony.gmail.sprites.menu.ButtonPlay;
 
 /**
  * Класс отвечает за стартовое меню приложения
@@ -26,6 +27,7 @@ public class MenuScreen extends Base2DScreen {
     private Star[] stars; //массив звезд
 
     private ButtonExit buttonExit; //кнопка выхода
+    private ButtonPlay buttonPlay; //кнопка играть
 
     @Override
     public void show() { //проводим всю инициализацию
@@ -39,6 +41,7 @@ public class MenuScreen extends Base2DScreen {
         }
 
         buttonExit = new ButtonExit(atlas); //кнопка сама вытащит необходимую текстуру
+        buttonPlay = new ButtonPlay(atlas); //кнопка сама вытащит необходимую текстуру
     }
 
     @Override
@@ -73,6 +76,7 @@ public class MenuScreen extends Base2DScreen {
             stars[i].draw(batch);
         }
         buttonExit.draw(batch); //рисуем кнопку
+        buttonPlay.draw(batch); //рисуем кнопку
         batch.end();
     }
 
@@ -83,6 +87,7 @@ public class MenuScreen extends Base2DScreen {
             stars[i].resize(worldBounds);
         }
         buttonExit.resize(worldBounds);
+        buttonPlay.resize(worldBounds);
     }
 
     @Override
@@ -95,12 +100,14 @@ public class MenuScreen extends Base2DScreen {
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         buttonExit.touchDown(touch, pointer); //сообщаем кнопке, что произошло это событие(обработка в ScaledTouchUpButton)
+        buttonPlay.touchDown(touch, pointer); //сообщаем кнопке, что произошло это событие(обработка в ScaledTouchUpButton)
         return super.touchDown(touch, pointer);
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
         buttonExit.touchUp(touch, pointer); //сообщаем кнопке, что произошло это событие(обработка в ScaledTouchUpButton)
+        buttonPlay.touchUp(touch, pointer); //сообщаем кнопке, что произошло это событие(обработка в ScaledTouchUpButton)
         return super.touchUp(touch, pointer);
     }
 }
