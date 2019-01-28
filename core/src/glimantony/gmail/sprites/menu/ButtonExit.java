@@ -13,7 +13,7 @@ public class ButtonExit extends ScaledTouchUpButton {
      */
     public ButtonExit(TextureAtlas atlas) {
         super(atlas.findRegion("btExit")); //в файле menuAtlas.tpack
-        setHeightProportion(0.15f); //15% от высоты экрана (размеры)
+        setHeightProportion(0.10f); //размер в% от высоты экрана (размеры)
     }
 
     /**
@@ -23,6 +23,8 @@ public class ButtonExit extends ScaledTouchUpButton {
     @Override
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
+        setBottom(worldBounds.getBottom() + 0.03f); //опускаем кнопку вниз с % отступом от нижней границы
+        setRight(worldBounds.getRight() - 0.03f); //сдвигаем кнопку вправо с % отступом от правой границы
     }
 
     @Override
