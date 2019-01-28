@@ -73,7 +73,6 @@ public class MenuScreen extends Base2DScreen {
      * Отвечает за всю отресовку
      */
     public void draw(){
-
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

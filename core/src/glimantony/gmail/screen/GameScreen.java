@@ -16,7 +16,23 @@ public class GameScreen extends Base2DScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        update(delta);
+        draw();
+    }
 
+    /**
+     * Метод как подметод render(float delta)
+     * @param delta
+     */
+    public void update(float delta){
+
+    }
+
+    /**
+     * Метод как подметод render(float delta)
+     * Отвечает за всю отресовку
+     */
+    public void draw(){
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
