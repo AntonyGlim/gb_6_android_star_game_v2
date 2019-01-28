@@ -11,6 +11,7 @@ import glimantony.gmail.base.Base2DScreen;
 import glimantony.gmail.math.Rect;
 import glimantony.gmail.sprites.Background;
 import glimantony.gmail.sprites.Star;
+import glimantony.gmail.sprites.menu.ButtonExit;
 
 /**
  * Класс отвечает за стартовое меню приложения
@@ -20,20 +21,24 @@ public class MenuScreen extends Base2DScreen {
     public static final float V_LEN = 0.001f; //величина вектора скорости
 
     private TextureAtlas atlas;
-    private Texture bg;
-    private Background background;
-    private Star[] stars;
+    private Texture bg; //фон
+    private Background background; //обертка для фона
+    private Star[] stars; //массив звезд
+
+    private ButtonExit buttonExit; //кнопка выхода
 
     @Override
     public void show() { //проводим всю инициализацию
         super.show();
         bg = new Texture("textures/backgrounds/spase_stars_background.jpg");
         background = new Background(new TextureRegion(bg));
-        atlas = new TextureAtlas("textures/mainAtlas.tpack"); //инициализируем конфиг для атласа
+        atlas = new TextureAtlas("textures/menuAtlas.tpack"); //инициализируем конфиг для атласа
         stars = new Star[256]; //звезда настраивает себя сама
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(atlas);
         }
+
+        buttonExit = new ButtonExit(atlas); //кнопка сама вытащит необходимую текстуру
     }
 
     @Override
@@ -67,6 +72,7 @@ public class MenuScreen extends Base2DScreen {
         for (int i = 0; i < stars.length; i++) {
             stars[i].draw(batch);
         }
+        buttonExit.draw(batch); //рисуем кнопку
         batch.end();
     }
 
@@ -76,6 +82,7 @@ public class MenuScreen extends Base2DScreen {
         for (int i = 0; i < stars.length; i++) {
             stars[i].resize(worldBounds);
         }
+        buttonExit.resize(worldBounds);
     }
 
     @Override
@@ -87,6 +94,13 @@ public class MenuScreen extends Base2DScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
+        buttonExit.touchDown(touch, pointer); //сообщаем кнопке, что произошло это событие(обработка в ScaledTouchUpButton)
         return super.touchDown(touch, pointer);
+    }
+
+    @Override
+    public boolean touchUp(Vector2 touch, int pointer) {
+        buttonExit.touchUp(touch, pointer); //сообщаем кнопке, что произошло это событие(обработка в ScaledTouchUpButton)
+        return super.touchUp(touch, pointer);
     }
 }
