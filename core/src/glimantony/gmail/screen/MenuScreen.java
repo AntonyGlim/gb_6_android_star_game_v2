@@ -1,5 +1,6 @@
 package glimantony.gmail.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,6 +22,8 @@ public class MenuScreen extends Base2DScreen {
 
     public static final float V_LEN = 0.001f; //величина вектора скорости (пока не используется)
 
+    private Game game; //для того, чтобы мы могли переключить экраны (ссылка) (заполняем в классе Star2DGame)
+
     private TextureAtlas atlas;
     private Texture bg; //фон
     private Background background; //обертка для фона
@@ -28,6 +31,10 @@ public class MenuScreen extends Base2DScreen {
 
     private ButtonExit buttonExit; //кнопка выхода
     private ButtonPlay buttonPlay; //кнопка играть
+
+    public MenuScreen(Game game) { //конструктор
+        this.game = game;
+    }
 
     @Override
     public void show() { //проводим всю инициализацию
@@ -41,7 +48,7 @@ public class MenuScreen extends Base2DScreen {
         }
 
         buttonExit = new ButtonExit(atlas); //кнопка сама вытащит необходимую текстуру
-        buttonPlay = new ButtonPlay(atlas); //кнопка сама вытащит необходимую текстуру
+        buttonPlay = new ButtonPlay(atlas, game); //кнопка сама вытащит необходимую текстуру
     }
 
     @Override

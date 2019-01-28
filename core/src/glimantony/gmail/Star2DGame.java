@@ -12,6 +12,6 @@ import glimantony.gmail.screen.MenuScreen;
 public class Star2DGame extends Game {
     @Override
     public void create() {
-        setScreen(new MenuScreen()); //Устанавливаем начальный экран
+        setScreen(new MenuScreen(this)); //Устанавливаем начальный экран, передаем ссылку на самого себя
     }
 }
