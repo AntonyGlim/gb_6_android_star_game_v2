@@ -12,7 +12,7 @@ public class Star extends Sprite {
 
     private Vector2 speed = new Vector2(); //ск-ть звезды
     private Rect worldBounds; //границы мира
-    private float size = 0.01f; //размеры звезды
+    private float size = 0.004f; //размеры звезды
 
     /**
      * Принимает на вход атлас
@@ -21,7 +21,7 @@ public class Star extends Sprite {
     public Star(TextureAtlas atlas) {
         super(atlas.findRegion("star"));
         setHeightProportion(size);
-        speed.set(Rnd.nextFloat(-0.005f, 0.005f), Rnd.nextFloat(-0.5f, -0.1f)); //звежды летт вниз
+        speed.set(Rnd.nextFloat(-0.005f, 0.005f), Rnd.nextFloat(-0.3f, -0.0001f)); //звежды летт вниз
     }
 
     /**
