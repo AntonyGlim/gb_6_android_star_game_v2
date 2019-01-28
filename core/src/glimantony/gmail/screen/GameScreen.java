@@ -11,6 +11,7 @@ import glimantony.gmail.base.Base2DScreen;
 import glimantony.gmail.math.Rect;
 import glimantony.gmail.sprites.Background;
 import glimantony.gmail.sprites.Star;
+import glimantony.gmail.sprites.game.MainShip;
 
 public class GameScreen extends Base2DScreen {
 
@@ -18,6 +19,8 @@ public class GameScreen extends Base2DScreen {
     private Texture bg; //фон
     private Background background; //обертка для фона
     private Star[] stars; //массив звезд
+
+    private MainShip mainShip; //наш корабль
 
 
     @Override
@@ -31,6 +34,7 @@ public class GameScreen extends Base2DScreen {
             stars[i] = new Star(atlas);
         }
 
+        mainShip = new MainShip(atlas);
     }
 
     @Override
@@ -63,6 +67,7 @@ public class GameScreen extends Base2DScreen {
         for (int i = 0; i < stars.length; i++) {
             stars[i].draw(batch);
         }
+        mainShip.draw(batch);
         batch.end();
     }
 
