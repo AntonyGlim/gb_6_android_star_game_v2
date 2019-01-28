@@ -25,7 +25,7 @@ public class GameScreen extends Base2DScreen {
         super.show();
         bg = new Texture("textures/backgrounds/spase_stars_background.jpg");
         background = new Background(new TextureRegion(bg));
-        atlas = new TextureAtlas("textures/menuAtlas.tpack"); //инициализируем конфиг для атласа
+        atlas = new TextureAtlas("textures/mainAtlas.tpack"); //инициализируем конфиг для атласа
         stars = new Star[64]; //звезда настраивает себя сама
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(atlas);
