@@ -1,16 +1,18 @@
-package ru.geekbrains.utils;
+package glimantony.gmail.utils;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Regions {
 
     /**
-     * Разбивает TextureRegion на фреймы
+     * Разбивает TextureRegion на фреймы (кадры)
      * @param region регион
      * @param rows количество строк
      * @param cols количество столбцов
      * @param frames количество фреймов
      * @return массив регионов
+     *
+     * Автор Алексей кутепов
      */
     public static TextureRegion[] split(TextureRegion region, int rows, int cols, int frames) {
         if(region == null) throw new RuntimeException("Split null region");

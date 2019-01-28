@@ -11,7 +11,7 @@ public class MainShip extends Sprite {
      * @param atlas
      */
     public MainShip(TextureAtlas atlas) {
-        super(atlas.findRegion("main_ship"));
+        super(atlas.findRegion("main_ship"), 1, 2, 2); //усовершенствованый конструктор
         setHeightProportion(0.12f); //Размеры корабля
     }
 }

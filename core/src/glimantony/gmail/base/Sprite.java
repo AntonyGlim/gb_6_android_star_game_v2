@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import glimantony.gmail.math.Rect;
+import glimantony.gmail.utils.Regions;
 
 /**
  * Класс более простой чем стандартные.
@@ -28,6 +29,17 @@ public class Sprite extends Rect {
         regions[0] = region;
     }
 
+    /**
+     *
+     * @param region - текстура
+     * @param rows - количество строк на которые необходимо разьить
+     * @param cols - количество столбцов на которые необходимо разбить
+     * @param frames - количество кадров
+     */
+    public Sprite(TextureRegion region, int rows, int cols, int frames){
+        if (region == null) throw new NullPointerException("region == null");
+        this.regions = Regions.split(region, rows, cols, frames);
+    }
     /**
      * Метод для пересчета ширины, в зависимости от высоты
      */
