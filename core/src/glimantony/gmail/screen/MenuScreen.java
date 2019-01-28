@@ -19,7 +19,7 @@ import glimantony.gmail.sprites.menu.ButtonPlay;
  */
 public class MenuScreen extends Base2DScreen {
 
-    public static final float V_LEN = 0.001f; //величина вектора скорости
+    public static final float V_LEN = 0.001f; //величина вектора скорости (пока не используется)
 
     private TextureAtlas atlas;
     private Texture bg; //фон
