@@ -57,9 +57,8 @@ public abstract class SpritesPool <T extends Sprite> {
 
     /**
      * Пули которые улетели за пределы экрана будут ожидать повторного использования
-     * @param delta
      */
-    public void freeAllDestroiedSprites(float delta){
+    public void freeAllDestroiedSprites(){
         for (int i = 0; i < activeObjects.size(); i++) {
             T sprite = activeObjects.get(i);
             if (sprite.isDestroied()){

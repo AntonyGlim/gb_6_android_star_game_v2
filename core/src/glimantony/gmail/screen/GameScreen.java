@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import glimantony.gmail.base.Base2DScreen;
 import glimantony.gmail.math.Rect;
+import glimantony.gmail.pool.BulletPool;
 import glimantony.gmail.sprites.Background;
 import glimantony.gmail.sprites.Star;
 import glimantony.gmail.sprites.game.MainShip;
@@ -22,6 +23,8 @@ public class GameScreen extends Base2DScreen {
 
     private MainShip mainShip; //наш корабль
 
+    private BulletPool bulletPool; //пул пуль
+
 
     @Override
     public void show() {
@@ -34,6 +37,7 @@ public class GameScreen extends Base2DScreen {
             stars[i] = new Star(atlas);
         }
 
+        bulletPool = new BulletPool();
         mainShip = new MainShip(atlas);
     }
 
@@ -41,6 +45,7 @@ public class GameScreen extends Base2DScreen {
     public void render(float delta) {
         super.render(delta);
         update(delta);
+        deleteAllDestroied();
         draw();
     }
 
@@ -53,6 +58,14 @@ public class GameScreen extends Base2DScreen {
             stars[i].update(delta);
         }
         mainShip.update(delta);
+        bulletPool.updateActiveSprites(delta); //чтобы наши пули смогли лететь
+    }
+
+    /**
+     *
+     */
+    public void deleteAllDestroied(){
+        bulletPool.freeAllDestroiedSprites();
     }
 
     /**
@@ -69,6 +82,7 @@ public class GameScreen extends Base2DScreen {
             stars[i].draw(batch);
         }
         mainShip.draw(batch);
+        bulletPool.drawActiveSprites(batch);
         batch.end();
     }
 
@@ -86,6 +100,7 @@ public class GameScreen extends Base2DScreen {
     public void dispose() {
         bg.dispose();
         atlas.dispose();
+        bulletPool.dispose();
         super.dispose();
     }
 
