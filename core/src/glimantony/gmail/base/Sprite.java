@@ -19,6 +19,8 @@ public class Sprite extends Rect {
     protected TextureRegion[] regions; //массив текстур для атласа
     protected int frame; //номер кадра для покадровой анимации
 
+    private boolean isDestroied; //помечен объект на удаление?
+
 
     public Sprite() { //сделали для пули
     }
@@ -108,5 +110,23 @@ public class Sprite extends Rect {
 
     public float getScale() {
         return scale;
+    }
+
+    /**
+     * Метод пометит о-кт на удаление
+     */
+    public void destroy(){
+        this.isDestroied = true;
+    }
+
+    /**
+     * Сбрасывает метку о-кта на удаление, мы сможем его использовать повторно
+     */
+    public void undestroy(){
+        this.isDestroied = false;
+    }
+
+    public boolean isDestroied() {
+        return isDestroied;
     }
 }
