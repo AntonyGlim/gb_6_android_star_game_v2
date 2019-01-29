@@ -10,8 +10,11 @@ import glimantony.gmail.math.Rect;
 
 public class MainShip extends Sprite {
 
-    private final Vector2 speedDelta = new Vector2(0.05f, 0f); //величина скорости
+    private final Vector2 speedDelta = new Vector2(0.5f, 0f); //величина скорости
     private Vector2 speed = new Vector2(); //скорость корабля
+
+    private boolean isPressedLeft; //хранит состояние нажатой кнопки
+    private boolean isPressedRight; //хранит состояние нажатой кнопки
 
     /**
      * Принимает на вход одну текстуру
@@ -42,10 +45,12 @@ public class MainShip extends Sprite {
         switch (keycode){ //если нажата
             case Input.Keys.A:
             case Input.Keys.LEFT:
+                isPressedLeft = true;
                 moveLeft(); //движение влево
                 break;
             case Input.Keys.D:
             case Input.Keys.RIGHT:
+                isPressedRight = true;
                 moveRight(); //движение вправо
                 break;
         }
@@ -56,9 +61,21 @@ public class MainShip extends Sprite {
         switch (keycode){ //если нажата
             case Input.Keys.A:
             case Input.Keys.LEFT:
+                isPressedLeft = false; //когда пользовательдержит 2 кнопки, корабль должен продолжать двигаться
+                if (isPressedRight){
+                    moveRight();
+                } else {
+                    stop(); //стоп
+                }
+                break;
             case Input.Keys.D:
             case Input.Keys.RIGHT:
-                stop(); //стоп
+                isPressedRight = false;
+                if (isPressedLeft){
+                    moveLeft();
+                } else {
+                    stop(); //стоп
+                }
                 break;
         }
         return false;
