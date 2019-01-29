@@ -38,14 +38,14 @@ public class GameScreen extends Base2DScreen {
         }
 
         bulletPool = new BulletPool();
-        mainShip = new MainShip(atlas);
+        mainShip = new MainShip(atlas, bulletPool);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
         update(delta);
-        deleteAllDestroied();
+        deleteAllDestroied(); //все что вылетело за экран будет перемещаться в список свободных о-ов
         draw();
     }
 

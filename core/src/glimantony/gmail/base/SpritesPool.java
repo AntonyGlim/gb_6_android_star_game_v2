@@ -31,6 +31,7 @@ public abstract class SpritesPool <T extends Sprite> {
             oject = freeObjects.remove(freeObjects.size() - 1); //берем последний элемент из списка
         }
         activeObjects.add(oject); //добавляем его в список активных
+        System.out.println("obtain() : active/free" + activeObjects.size() + "/" + freeObjects.size());
         return oject;
     }
 
@@ -75,6 +76,7 @@ public abstract class SpritesPool <T extends Sprite> {
         activeObjects.remove(object); //удаляем о-кт из списка активных
         freeObjects.add(object); //добавляем его в список свободных о-ов
         object.undestroy();
+        System.out.println("obtain() : active/free" + activeObjects.size() + "/" + freeObjects.size());
     }
 
     public List<T> getActiveObjects() {
