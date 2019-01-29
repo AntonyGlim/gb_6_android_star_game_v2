@@ -19,6 +19,10 @@ public class Sprite extends Rect {
     protected TextureRegion[] regions; //массив текстур для атласа
     protected int frame; //номер кадра для покадровой анимации
 
+
+    public Sprite() { //сделали для пули
+    }
+
     /**
      * Принимает на вход одну текстуру
      * @param region
