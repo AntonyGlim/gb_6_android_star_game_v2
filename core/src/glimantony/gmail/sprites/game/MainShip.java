@@ -1,5 +1,6 @@
 package glimantony.gmail.sprites.game;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -34,13 +35,53 @@ public class MainShip extends Sprite {
     @Override
     public void update(float delta) {
         super.update(delta);
+        pos.mulAdd(speed, delta);
     }
 
     public boolean keyDown(int keycode) { //нажали клавишу
+        switch (keycode){ //если нажата
+            case Input.Keys.A:
+            case Input.Keys.LEFT:
+                moveLeft(); //движение влево
+                break;
+            case Input.Keys.D:
+            case Input.Keys.RIGHT:
+                moveRight(); //движение вправо
+                break;
+        }
         return false;
     }
 
     public boolean keyUp(int keycode) { //отпустили клавишу
+        switch (keycode){ //если нажата
+            case Input.Keys.A:
+            case Input.Keys.LEFT:
+            case Input.Keys.D:
+            case Input.Keys.RIGHT:
+                stop(); //стоп
+                break;
+        }
         return false;
+    }
+
+    /**
+     * Движение корабля
+     */
+    private void moveRight(){
+        speed.set(speedDelta);
+    }
+
+    /**
+     * Движение корабля
+     */
+    private void moveLeft(){
+        speed.set(speedDelta).rotate(180); //rotate() - поворачивает в-р на градусы
+    }
+
+    /**
+     * Остановка корабля
+     */
+    private void stop(){
+        speed.setZero(); //обнуляем скорость
     }
 }

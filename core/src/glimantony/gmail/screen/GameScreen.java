@@ -91,11 +91,13 @@ public class GameScreen extends Base2DScreen {
 
     @Override
     public boolean keyDown(int keycode) {
+        mainShip.keyDown(keycode); //передаем кораблю событие
         return super.keyDown(keycode);
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        mainShip.keyUp(keycode); //передаем кораблю событие
         return super.keyUp(keycode);
     }
 
