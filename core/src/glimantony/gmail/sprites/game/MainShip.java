@@ -9,6 +9,9 @@ import glimantony.gmail.base.Sprite;
 import glimantony.gmail.math.Rect;
 import glimantony.gmail.pool.BulletPool;
 
+/**
+ * Класс описывает наш игровой кораль
+ */
 public class MainShip extends Sprite {
 
     private static final int ABSTRACT_POINTER = -1; //некий не существующий номер пальца
