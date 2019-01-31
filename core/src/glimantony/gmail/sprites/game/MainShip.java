@@ -93,6 +93,21 @@ public class MainShip extends Sprite {
         return false;
     }
 
+    @Override
+    public boolean touchDown(Vector2 touch, int pointer) {
+        if(touch.x < worldBounds.pos.x) //проверяем положение корабля по Х (плохо для мультитача)
+            moveLeft();
+        else
+            moveRight();
+        return super.touchDown(touch, pointer);
+    }
+
+    @Override
+    public boolean touchUp(Vector2 touch, int pointer) {
+        stop();
+        return super.touchUp(touch, pointer);
+    }
+
     /**
      * Движение корабля
      */
