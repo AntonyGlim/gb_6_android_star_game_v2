@@ -48,6 +48,14 @@ public class MainShip extends Sprite {
     public void update(float delta) {
         super.update(delta);
         pos.mulAdd(speed, delta);
+        if (getRight() > worldBounds.getRight()) {//корабль улетает за границы?
+            setRight(worldBounds.getRight());//ставим корабль в позицыю скраю
+            stop();
+        }
+        if (getLeft() < worldBounds.getLeft()) {//корабль улетает за границы?
+            setLeft(worldBounds.getLeft());//ставим корабль в позицыю скраю
+            stop();
+        }
     }
 
     public boolean keyDown(int keycode) { //нажали клавишу
