@@ -11,6 +11,8 @@ import glimantony.gmail.pool.BulletPool;
 
 public class MainShip extends Sprite {
 
+    private static final int ABSTRACT_POINTER = -1; //некий не существующий номер пальца
+
     private Rect worldBounds; //границы мира (иниц. в resize)
 
     private final Vector2 speedDelta = new Vector2(0.5f, 0f); //величина скорости
@@ -21,6 +23,9 @@ public class MainShip extends Sprite {
 
     private BulletPool bulletPool; //для передачи в конструктор
     private TextureRegion bulletRegion; //текстура пули
+
+    private int leftPointer = ABSTRACT_POINTER; //в переменных будут храниться номера пальцев
+    private int rightPointer = ABSTRACT_POINTER;
 
     /**
      * Принимает на вход одну текстуру
@@ -103,16 +108,36 @@ public class MainShip extends Sprite {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        if(touch.x < worldBounds.pos.x) //проверяем положение корабля по Х (плохо для мультитача)
+        if(touch.x < worldBounds.pos.x){ //проверяем положение корабля по Х (плохо для мультитача)
+            if (leftPointer != ABSTRACT_POINTER) return false;//проверим, не нажал-ли пользователь на другую часть экрана
+            leftPointer = pointer; //присваиваем номер пальца которым был нажат экран
             moveLeft();
-        else
+        }
+        else {
+            if (rightPointer != ABSTRACT_POINTER) return false;
+            rightPointer = pointer;
             moveRight();
+        }
         return super.touchDown(touch, pointer);
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
-        stop();
+        if (pointer == leftPointer) {//если отпустил левый палец
+            leftPointer = ABSTRACT_POINTER;
+            if (rightPointer != ABSTRACT_POINTER){//если на экране еще находиться другой палец
+                moveRight();
+            } else { //пользователь отпустил все пальцы
+                stop();
+            }
+        } else if (pointer == rightPointer){ //то-же для другой стороны
+            rightPointer = ABSTRACT_POINTER;
+            if (leftPointer != ABSTRACT_POINTER){
+                moveLeft();
+            } else {
+                stop();
+            }
+        }
         return super.touchUp(touch, pointer);
     }
 
