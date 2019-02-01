@@ -180,7 +180,7 @@ public class MainShip extends Sprite {
      * Стрельба
      */
     private void shoot(){
-        shootSound.play();
+        shootSound.play(0.3f);
         Bullet bullet = bulletPool.obtain(); //
         bullet.set(this, bulletRegion, pos, new Vector2(0, 0.5f), 0.05f, worldBounds, 1);
     }

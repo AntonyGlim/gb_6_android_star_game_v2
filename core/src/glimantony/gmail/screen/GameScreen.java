@@ -1,6 +1,7 @@
 package glimantony.gmail.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -25,6 +26,8 @@ public class GameScreen extends Base2DScreen {
 
     private BulletPool bulletPool; //пул пуль
 
+    private Music music; //фоновая музыка
+
 
     @Override
     public void show() {
@@ -39,6 +42,11 @@ public class GameScreen extends Base2DScreen {
 
         bulletPool = new BulletPool();
         mainShip = new MainShip(atlas, bulletPool);
+
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music_1.mp3")); //подключаем музыку
+        music.setLooping(true); //сделаем повторяющейся
+        music.setVolume(0.8f); //громкость музыки
+        music.play();
     }
 
     @Override
@@ -102,6 +110,7 @@ public class GameScreen extends Base2DScreen {
         atlas.dispose();
         bulletPool.dispose();
         mainShip.dispose();
+        music.dispose();
         super.dispose();
     }
 
