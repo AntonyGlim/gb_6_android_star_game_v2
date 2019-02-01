@@ -1,6 +1,8 @@
 package glimantony.gmail.sprites.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -33,6 +35,8 @@ public class MainShip extends Sprite {
     private int leftPointer = ABSTRACT_POINTER; //в переменных будут храниться номера пальцев
     private int rightPointer = ABSTRACT_POINTER;
 
+    private Sound shootSound; //звук выстрела
+
     /**
      * Принимает на вход одну текстуру
      * @param atlas
@@ -42,6 +46,7 @@ public class MainShip extends Sprite {
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         this.reloadInterval = 0.3f; //интервал стрельбы
         setHeightProportion(0.12f); //Размеры корабля
+        shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/shoot.mp3")); //звук
         this.bulletPool = bulletPool; //пул пуль
     }
 
@@ -175,7 +180,12 @@ public class MainShip extends Sprite {
      * Стрельба
      */
     private void shoot(){
+        shootSound.play();
         Bullet bullet = bulletPool.obtain(); //
         bullet.set(this, bulletRegion, pos, new Vector2(0, 0.5f), 0.05f, worldBounds, 1);
+    }
+
+    public void dispose() {
+        shootSound.dispose(); //освобождаем ресурсы
     }
 }

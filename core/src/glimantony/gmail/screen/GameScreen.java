@@ -101,6 +101,7 @@ public class GameScreen extends Base2DScreen {
         bg.dispose();
         atlas.dispose();
         bulletPool.dispose();
+        mainShip.dispose();
         super.dispose();
     }
 
