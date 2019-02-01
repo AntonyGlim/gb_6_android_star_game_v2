@@ -27,6 +27,9 @@ public class MainShip extends Sprite {
     private BulletPool bulletPool; //для передачи в конструктор
     private TextureRegion bulletRegion; //текстура пули
 
+    private float reloadInterval; //интервал стрельбы (время перезарядки)
+    private float reloadTimer; //для отсчета времени
+
     private int leftPointer = ABSTRACT_POINTER; //в переменных будут храниться номера пальцев
     private int rightPointer = ABSTRACT_POINTER;
 
@@ -37,6 +40,7 @@ public class MainShip extends Sprite {
     public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
         super(atlas.findRegion("main_ship"), 1, 2, 2); //усовершенствованый конструктор
         this.bulletRegion = atlas.findRegion("bulletMainShip");
+        this.reloadInterval = 0.3f; //интервал стрельбы
         setHeightProportion(0.12f); //Размеры корабля
         this.bulletPool = bulletPool; //пул пуль
     }
@@ -56,6 +60,11 @@ public class MainShip extends Sprite {
     public void update(float delta) {
         super.update(delta);
         pos.mulAdd(speed, delta);
+        reloadTimer += delta; //увеличиваем значение таймера на
+        if (reloadTimer >= reloadInterval){ //
+            reloadTimer = 0f; //обнуляем таймер
+            shoot();
+        }
         if (getRight() > worldBounds.getRight()) {//корабль улетает за границы?
             setRight(worldBounds.getRight());//ставим корабль в позицыю скраю
             stop();
@@ -77,9 +86,6 @@ public class MainShip extends Sprite {
             case Input.Keys.RIGHT:
                 isPressedRight = true;
                 moveRight(); //движение вправо
-                break;
-            case Input.Keys.UP:
-                shoot();
                 break;
         }
         return false;
