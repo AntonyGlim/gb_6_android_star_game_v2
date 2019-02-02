@@ -23,12 +23,8 @@ public class MainShip extends Ship {
     private boolean isPressedLeft; //хранит состояние нажатой кнопки
     private boolean isPressedRight; //хранит состояние нажатой кнопки
 
-
-
     private int leftPointer = ABSTRACT_POINTER; //в переменных будут храниться номера пальцев
     private int rightPointer = ABSTRACT_POINTER;
-
-
 
     /**
      * Принимает на вход одну текстуру
@@ -41,6 +37,10 @@ public class MainShip extends Ship {
         setHeightProportion(0.12f); //Размеры корабля
         shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/shoot.mp3")); //звук
         this.bulletPool = bulletPool; //пул пуль
+        this.bulletSpeed = new Vector2(0, 0.5f); //устанавливаем скорост пули
+        this.bulletHeight = 0.012f; //устанавливаем размеры пули
+        this.bulletDamage = 1; //урон наносимый пулей
+        this.hp = 100; //количество жизней корабля
     }
 
     @Override
@@ -168,7 +168,4 @@ public class MainShip extends Ship {
         speed.setZero(); //обнуляем скорость
     }
 
-    public void dispose() {
-        shootSound.dispose(); //освобождаем ресурсы
-    }
 }

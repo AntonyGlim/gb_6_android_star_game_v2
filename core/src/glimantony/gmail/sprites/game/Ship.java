@@ -26,6 +26,7 @@ public class Ship extends Sprite {
     protected float bulletHeight; //размеры пули
 
     protected int bulletDamage; //урон наносимый пулей
+    protected int hp; //количество жизней корабля
 
     /**
      * конструктор для нашего корабля
@@ -40,12 +41,13 @@ public class Ship extends Sprite {
         this.worldBounds = worldBounds;
     }
 
-    /**
-     * Стрельба
-     */
-    public void shoot(){
+    public void shoot(){ //Стрельба
         shootSound.play(0.3f);
         Bullet bullet = bulletPool.obtain(); //
         bullet.set(this, bulletRegion, pos,bulletSpeed, bulletHeight, worldBounds, bulletDamage);
+    }
+
+    public void dispose() {
+        shootSound.dispose(); //освобождаем ресурсы
     }
 }
