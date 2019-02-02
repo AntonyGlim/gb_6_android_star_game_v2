@@ -16,7 +16,9 @@ public class Enemy extends Ship {
 
     private Vector2 speed0 = new Vector2();
 
-    public Enemy(Sound shootSound, BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds) {
+    private MainShip mainShip; //для того, чтобы наносить урон при столкновении
+
+    public Enemy(Sound shootSound, BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, MainShip mainShip) {
         super();
         this.worldBounds = worldBounds;
         this.shootSound = shootSound;
@@ -24,6 +26,7 @@ public class Enemy extends Ship {
         this.speed.set(speed0);
         this.bulletSpeed = new Vector2();
         this.explosionPool = explosionPool;
+        this.mainShip = mainShip;
     }
 
     public void set(
@@ -70,6 +73,7 @@ public class Enemy extends Ship {
                     shoot();
                 }
                 if (getBottom() < worldBounds.getBottom()){ //по достижению нижней границы экрана
+                    mainShip.damage(this.bulletDamage); //кораблю наноситься урон
                     destroy(); //корабль исчезнет
                 }
                 break;
