@@ -41,7 +41,7 @@ public class MainShip extends Ship {
         this.bulletSpeed = new Vector2(0, 0.5f); //устанавливаем скорост пули
         this.bulletHeight = 0.012f; //устанавливаем размеры пули
         this.bulletDamage = 1; //урон наносимый пулей
-        this.hp = 100; //количество жизней корабля
+        this.hp = 1; //количество жизней корабля
         this.explosionPool = explosionPool;
     }
 
@@ -183,4 +183,9 @@ public class MainShip extends Ship {
         );
     }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+        boom();
+    }
 }

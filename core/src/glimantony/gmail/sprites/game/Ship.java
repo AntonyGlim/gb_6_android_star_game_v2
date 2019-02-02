@@ -79,6 +79,10 @@ public class Ship extends Sprite {
     public void damage(int damage){
         frame = 1; //В корабль попали, меняем текстуру
         damageTimer = 0; //пока таймер не увеличиться до damageInterval в методк update()
+        hp -= damage; //уменьшаем кол-во жизней корабля
+        if (hp <= 0){
+            destroy(); //взрываем корабль
+        }
     }
 
     public void dispose() {
