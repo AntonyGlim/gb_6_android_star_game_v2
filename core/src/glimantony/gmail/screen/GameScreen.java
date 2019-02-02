@@ -11,11 +11,13 @@ import com.badlogic.gdx.math.Vector2;
 import glimantony.gmail.base.Base2DScreen;
 import glimantony.gmail.math.Rect;
 import glimantony.gmail.pool.BulletPool;
+import glimantony.gmail.pool.EnemyPool;
 import glimantony.gmail.pool.ExplosionPool;
 import glimantony.gmail.sprites.Background;
 import glimantony.gmail.sprites.Star;
 import glimantony.gmail.sprites.game.Explosion;
 import glimantony.gmail.sprites.game.MainShip;
+import glimantony.gmail.utils.EnemyEmitter;
 
 public class GameScreen extends Base2DScreen {
 
@@ -28,8 +30,12 @@ public class GameScreen extends Base2DScreen {
 
     private BulletPool bulletPool; //пул пуль
     private ExplosionPool explosionPool; //пул взрыва
+    private EnemyPool enemyPool; //пул вражеских кораблей
+
+    private EnemyEmitter enemyEmitter;
 
     private Music music; //фоновая музыка
+
 
 
     @Override
@@ -46,6 +52,9 @@ public class GameScreen extends Base2DScreen {
         bulletPool = new BulletPool();
         explosionPool = new ExplosionPool(atlas);
         mainShip = new MainShip(atlas, bulletPool);
+        enemyPool = new EnemyPool(bulletPool);
+
+        enemyEmitter = new EnemyEmitter(atlas, enemyPool, worldBounds);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music_1.mp3")); //подключаем музыку
         music.setLooping(true); //сделаем повторяющейся
@@ -72,6 +81,9 @@ public class GameScreen extends Base2DScreen {
         mainShip.update(delta);
         bulletPool.updateActiveSprites(delta); //чтобы наши пули смогли лететь
         explosionPool.updateActiveSprites(delta); //чтобы нпроигрывался взрыв
+        enemyPool.updateActiveSprites(delta);
+
+        enemyEmitter.generate(delta);
     }
 
     /**
@@ -80,6 +92,7 @@ public class GameScreen extends Base2DScreen {
     public void deleteAllDestroied(){
         bulletPool.freeAllDestroiedSprites();
         explosionPool.freeAllDestroiedSprites();
+        enemyPool.freeAllDestroiedSprites();
     }
 
     /**
@@ -98,6 +111,7 @@ public class GameScreen extends Base2DScreen {
         mainShip.draw(batch);
         bulletPool.drawActiveSprites(batch);
         explosionPool.drawActiveSprites(batch);
+        enemyPool.drawActiveSprites(batch);
         batch.end();
     }
 
@@ -117,6 +131,7 @@ public class GameScreen extends Base2DScreen {
         atlas.dispose();
         bulletPool.dispose();
         explosionPool.dispose();
+        enemyPool.dispose();
         mainShip.dispose();
         music.dispose();
         super.dispose();

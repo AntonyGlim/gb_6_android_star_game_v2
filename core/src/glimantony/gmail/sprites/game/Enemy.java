@@ -8,13 +8,14 @@ import glimantony.gmail.pool.BulletPool;
 
 public class Enemy extends Ship {
 
-    private Vector2 speed0;
+    private Vector2 speed0 = new Vector2();
 
     public Enemy(Sound shootSound, BulletPool bulletPool) {
         super();
         this.shootSound = shootSound;
         this.bulletPool = bulletPool;
         this.speed.set(speed0);
+        this.bulletSpeed = new Vector2();
     }
 
     public void set(
@@ -45,5 +46,6 @@ public class Enemy extends Ship {
     @Override
     public void update(float delta) { //позволит кораблю лететь по экрану
         super.update(delta);
+        this.pos.mulAdd(speed, delta);
     }
 }

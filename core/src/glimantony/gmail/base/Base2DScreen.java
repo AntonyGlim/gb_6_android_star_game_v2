@@ -25,7 +25,7 @@ public abstract class Base2DScreen implements Screen, InputProcessor {
     protected SpriteBatch batch; //перенесли его из MenuScreen
 
     private Rect screenBounds; //Наш экран, граница оласти рисования в пикселях
-    private Rect worldBounds; //Система координат игрового мира (высота 1f и ширина 1f*acpect
+    protected Rect worldBounds; //Система координат игрового мира (высота 1f и ширина 1f*acpect
     private Rect glBounds; //Квадрат OpenGL куда мы проецируемся (2f на 2f) границы мира
 
     private Matrix4 worldToGl; //матрица перевода координат из мировой си-мы коорд-т в OpenGL
