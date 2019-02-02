@@ -102,6 +102,7 @@ public class GameScreen extends Base2DScreen {
             float minDistanceBetweenShips = enemy.getHalfHeight() + mainShip.getHalfHeight(); //произвольно рассчитываем
             if (enemy.pos.dst2(mainShip.pos) <= minDistanceBetweenShips * minDistanceBetweenShips){
                 enemy.destroy();
+                mainShip.damage(enemy.getBulletDamage());
                 return;
             }
         }
