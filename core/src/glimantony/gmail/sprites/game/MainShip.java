@@ -14,28 +14,21 @@ import glimantony.gmail.pool.BulletPool;
 /**
  * Класс описывает наш игровой кораль
  */
-public class MainShip extends Sprite {
+public class MainShip extends Ship {
 
     private static final int ABSTRACT_POINTER = -1; //некий не существующий номер пальца
 
-    private Rect worldBounds; //границы мира (иниц. в resize)
-
     private final Vector2 speedDelta = new Vector2(0.5f, 0f); //величина скорости
-    private Vector2 speed = new Vector2(); //скорость корабля
 
     private boolean isPressedLeft; //хранит состояние нажатой кнопки
     private boolean isPressedRight; //хранит состояние нажатой кнопки
 
-    private BulletPool bulletPool; //для передачи в конструктор
-    private TextureRegion bulletRegion; //текстура пули
 
-    private float reloadInterval; //интервал стрельбы (время перезарядки)
-    private float reloadTimer; //для отсчета времени
 
     private int leftPointer = ABSTRACT_POINTER; //в переменных будут храниться номера пальцев
     private int rightPointer = ABSTRACT_POINTER;
 
-    private Sound shootSound; //звук выстрела
+
 
     /**
      * Принимает на вход одну текстуру
@@ -53,7 +46,6 @@ public class MainShip extends Sprite {
     @Override
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
-        this.worldBounds = worldBounds;
         setBottom(worldBounds.getBottom() + 0.05f);
     }
 
@@ -174,15 +166,6 @@ public class MainShip extends Sprite {
      */
     private void stop(){
         speed.setZero(); //обнуляем скорость
-    }
-
-    /**
-     * Стрельба
-     */
-    private void shoot(){
-        shootSound.play(0.3f);
-        Bullet bullet = bulletPool.obtain(); //
-        bullet.set(this, bulletRegion, pos, new Vector2(0, 0.5f), 0.05f, worldBounds, 1);
     }
 
     public void dispose() {
