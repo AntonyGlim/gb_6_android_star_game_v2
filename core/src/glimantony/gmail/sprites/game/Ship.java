@@ -84,4 +84,8 @@ public class Ship extends Sprite {
     public void dispose() {
         shootSound.dispose(); //освобождаем ресурсы
     }
+
+    public int getBulletDamage() {
+        return bulletDamage;
+    }
 }

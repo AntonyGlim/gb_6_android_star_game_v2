@@ -115,6 +115,7 @@ public class GameScreen extends Base2DScreen {
                     continue;
                 }
                 if (!bullet.isOutside(enemy)){ //если пуля в пределах корабля
+                    enemy.damage(mainShip.getBulletDamage()); //противнику наноситься урон, он меняет цвет
                     bullet.destroy(); //уничтожаем пулю
                 }
             }
