@@ -170,4 +170,17 @@ public class MainShip extends Ship {
         speed.setZero(); //обнуляем скорость
     }
 
+    /**
+     * Метод усовершенствует взаимодействие корабля и вражеской пули.
+     * Пуля попала в корабль, когда достигает его центра текстуры
+     * @return
+     */
+    public boolean isBulletCollisionMainShip(Rect bullet){
+        return !(bullet.getRight() < getLeft() //право пули меньше чем лево корабля
+                || bullet.getLeft() > getRight()
+                || bullet.getBottom() > pos.y //летит с другой стороны (чем у противника
+                || bullet.getTop() <getBottom() //пуля долетит до центра корабля
+        );
+    }
+
 }

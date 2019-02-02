@@ -120,7 +120,17 @@ public class GameScreen extends Base2DScreen {
                     bullet.destroy(); //уничтожаем пулю
                 }
             }
+        }
 
+        //проверяем пересечение вражеских пуь с нашими кораблями
+        for (Bullet bullet : bulletList) {
+            if (bullet.getOwnerOfBullet() == mainShip || bullet.isDestroied()){ //если пуля наша или уничтожена
+                continue;
+            }
+            if (mainShip.isBulletCollisionMainShip(bullet)){
+                mainShip.damage(bullet.getDemage()); //наносим кораблю урон
+                bullet.destroy();
+            }
         }
     }
 
