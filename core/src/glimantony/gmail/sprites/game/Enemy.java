@@ -81,4 +81,17 @@ public class Enemy extends Ship {
         super.destroy();
         boom(); //взрыв корабля
     }
+
+    /**
+     * Метод усовершенствует взаимодействие корабля и вражеской пули.
+     * Пуля попала в корабль, когда достигает его центра текстуры
+     * @return
+     */
+    public boolean isBulletCollision(Rect bullet){
+        return !(bullet.getRight() < getLeft() //право пули меньше чем лево корабля
+                || bullet.getLeft() > getRight()
+                || bullet.getBottom() > getTop()
+                || bullet.getTop() < pos.y //пуля долетит до центра корабля
+        );
+    }
 }
