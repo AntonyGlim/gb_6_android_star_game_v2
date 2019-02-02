@@ -17,6 +17,7 @@ import glimantony.gmail.pool.EnemyPool;
 import glimantony.gmail.pool.ExplosionPool;
 import glimantony.gmail.sprites.Background;
 import glimantony.gmail.sprites.Star;
+import glimantony.gmail.sprites.game.Bullet;
 import glimantony.gmail.sprites.game.Enemy;
 import glimantony.gmail.sprites.game.Explosion;
 import glimantony.gmail.sprites.game.MainShip;
@@ -105,6 +106,20 @@ public class GameScreen extends Base2DScreen {
             }
         }
 
+        //проверим пересечение наших пуль с вражескими кораблями
+        List<Bullet> bulletList = bulletPool.getActiveObjects();//список всех пуль находящихся на экране
+        for (Enemy enemy : enemyList) {
+            if (enemy.isDestroied()) continue; //если корабль уже уничтожен, то он не принимает участия в игровом процессе
+            for (Bullet bullet : bulletList) {
+                if (bullet.getOwnerOfBullet() != mainShip || bullet.isDestroied()){ //если пуля не наша или уничтожена
+                    continue;
+                }
+                if (!bullet.isOutside(enemy)){ //если пуля в пределах корабля
+                    bullet.destroy(); //уничтожаем пулю
+                }
+            }
+
+        }
     }
 
     /**
