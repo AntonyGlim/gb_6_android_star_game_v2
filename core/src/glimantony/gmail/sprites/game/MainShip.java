@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import glimantony.gmail.base.Sprite;
 import glimantony.gmail.math.Rect;
 import glimantony.gmail.pool.BulletPool;
+import glimantony.gmail.pool.ExplosionPool;
 
 /**
  * Класс описывает наш игровой кораль
@@ -30,7 +31,7 @@ public class MainShip extends Ship {
      * Принимает на вход одну текстуру
      * @param atlas
      */
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
         super(atlas.findRegion("main_ship"), 1, 2, 2); //усовершенствованый конструктор
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         this.reloadInterval = 0.3f; //интервал стрельбы
@@ -41,6 +42,7 @@ public class MainShip extends Ship {
         this.bulletHeight = 0.012f; //устанавливаем размеры пули
         this.bulletDamage = 1; //урон наносимый пулей
         this.hp = 100; //количество жизней корабля
+        this.explosionPool = explosionPool;
     }
 
     @Override

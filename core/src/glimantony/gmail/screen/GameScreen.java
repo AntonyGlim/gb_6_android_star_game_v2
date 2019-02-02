@@ -51,8 +51,8 @@ public class GameScreen extends Base2DScreen {
 
         bulletPool = new BulletPool();
         explosionPool = new ExplosionPool(atlas);
-        mainShip = new MainShip(atlas, bulletPool);
-        enemyPool = new EnemyPool(bulletPool, worldBounds);
+        mainShip = new MainShip(atlas, bulletPool, explosionPool);
+        enemyPool = new EnemyPool(bulletPool, worldBounds, explosionPool);
 
         enemyEmitter = new EnemyEmitter(atlas, enemyPool, worldBounds);
 
@@ -151,10 +151,6 @@ public class GameScreen extends Base2DScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        { //протестируем взрыв
-            Explosion explosion = explosionPool.obtain(); //достаем из пула свободные объекты
-            explosion.set(0.1f, touch);
-        }
         mainShip.touchDown(touch, pointer); //передаем кораблю событие
         return super.touchDown(touch, pointer);
     }

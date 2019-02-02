@@ -6,18 +6,20 @@ import com.badlogic.gdx.math.Vector2;
 
 import glimantony.gmail.math.Rect;
 import glimantony.gmail.pool.BulletPool;
+import glimantony.gmail.pool.ExplosionPool;
 
 public class Enemy extends Ship {
 
     private Vector2 speed0 = new Vector2();
 
-    public Enemy(Sound shootSound, BulletPool bulletPool, Rect worldBounds) {
+    public Enemy(Sound shootSound, BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds) {
         super();
         this.worldBounds = worldBounds;
         this.shootSound = shootSound;
         this.bulletPool = bulletPool;
         this.speed.set(speed0);
         this.bulletSpeed = new Vector2();
+        this.explosionPool = explosionPool;
     }
 
     public void set(
@@ -54,9 +56,9 @@ public class Enemy extends Ship {
             reloadTimer = 0f;
             shoot();
         }
-        //TODO пока не работает
         if (getBottom() < worldBounds.getBottom()){ //по достижению нижней границы экрана
             destroy(); //корабль исчезнет
+            boom(); //взрыв корабля
         }
     }
 

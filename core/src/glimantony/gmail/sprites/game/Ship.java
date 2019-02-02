@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import glimantony.gmail.base.Sprite;
 import glimantony.gmail.math.Rect;
 import glimantony.gmail.pool.BulletPool;
+import glimantony.gmail.pool.ExplosionPool;
 
 public class Ship extends Sprite {
 
@@ -27,6 +28,8 @@ public class Ship extends Sprite {
 
     protected int bulletDamage; //урон наносимый пулей
     protected int hp; //количество жизней корабля
+
+    protected ExplosionPool explosionPool; //анимация взрывов
 
 
     public Ship() {
@@ -50,6 +53,11 @@ public class Ship extends Sprite {
         shootSound.play(0.3f);
         Bullet bullet = bulletPool.obtain(); //
         bullet.set(this, bulletRegion, pos,bulletSpeed, bulletHeight, worldBounds, bulletDamage);
+    }
+
+    public void boom(){ //взрыв корабля
+        Explosion explosion = explosionPool.obtain();
+        explosion.set(getHeight(), pos); //размеры корабля и его местоположение
     }
 
     public void dispose() {
