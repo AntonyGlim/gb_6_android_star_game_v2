@@ -83,7 +83,9 @@ public class GameScreen extends Base2DScreen {
         for (int i = 0; i < stars.length; i++) {
             stars[i].update(delta);
         }
-        mainShip.update(delta);
+        if (!mainShip.isDestroied()){ //если наш корабль не уничтожен
+            mainShip.update(delta);
+        }
         bulletPool.updateActiveSprites(delta); //чтобы наши пули смогли лететь
         explosionPool.updateActiveSprites(delta); //чтобы нпроигрывался взрыв
         enemyPool.updateActiveSprites(delta);
@@ -156,7 +158,9 @@ public class GameScreen extends Base2DScreen {
         for (int i = 0; i < stars.length; i++) {
             stars[i].draw(batch);
         }
-        mainShip.draw(batch);
+        if (!mainShip.isDestroied()){ //если наш корабль не уничтожен
+            mainShip.draw(batch);
+        }
         bulletPool.drawActiveSprites(batch);
         explosionPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
@@ -187,25 +191,33 @@ public class GameScreen extends Base2DScreen {
 
     @Override
     public boolean keyDown(int keycode) {
-        mainShip.keyDown(keycode); //передаем кораблю событие
+        if (!mainShip.isDestroied()){ //если наш корабль не уничтожен
+            mainShip.keyDown(keycode); //передаем кораблю событие
+        }
         return super.keyDown(keycode);
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        mainShip.keyUp(keycode); //передаем кораблю событие
+        if (!mainShip.isDestroied()){ //если наш корабль не уничтожен
+            mainShip.keyUp(keycode); //передаем кораблю событие
+        }
         return super.keyUp(keycode);
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        mainShip.touchDown(touch, pointer); //передаем кораблю событие
+        if (!mainShip.isDestroied()){ //если наш корабль не уничтожен
+            mainShip.touchDown(touch, pointer); //передаем кораблю событие
+        }
         return super.touchDown(touch, pointer);
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
-        mainShip.touchUp(touch, pointer); //передаем кораблю событие
+        if (!mainShip.isDestroied()){ //если наш корабль не уничтожен
+            mainShip.touchUp(touch, pointer); //передаем кораблю событие
+        }
         return super.touchUp(touch, pointer);
     }
 }
