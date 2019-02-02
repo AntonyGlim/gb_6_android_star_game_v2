@@ -28,6 +28,11 @@ public class Ship extends Sprite {
     protected int bulletDamage; //урон наносимый пулей
     protected int hp; //количество жизней корабля
 
+
+    public Ship() {
+        super();
+    }
+
     /**
      * конструктор для нашего корабля
      */
