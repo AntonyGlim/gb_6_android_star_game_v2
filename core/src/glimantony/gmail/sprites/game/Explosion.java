@@ -1,5 +1,7 @@
 package glimantony.gmail.sprites.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
@@ -13,8 +15,11 @@ public class Explosion extends Sprite {
     private float animatedInterval = 0.017f; //интервал смены кадров анимации
     private float animatedTimer; //интервал смены кадров анимации
 
-    public Explosion(TextureRegion region, int rows, int cols, int frames) {
+    private Sound explosionSound;
+
+    public Explosion(TextureRegion region, int rows, int cols, int frames, Sound explosionSound) {
         super(region, rows, cols, frames);
+        this.explosionSound = explosionSound;
     }
 
     /**
@@ -25,6 +30,7 @@ public class Explosion extends Sprite {
     public void set(float height, Vector2 pos){
         this.pos.set(pos); //описано в Sprite
         setHeightProportion(height); //устанавливаем размеры
+        explosionSound.play(0.4f);
     }
 
     @Override
@@ -43,4 +49,5 @@ public class Explosion extends Sprite {
         super.destroy();
         frame = 0; //чтобы начать с 0 кадра
     }
+
 }

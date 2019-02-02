@@ -11,8 +11,10 @@ import com.badlogic.gdx.math.Vector2;
 import glimantony.gmail.base.Base2DScreen;
 import glimantony.gmail.math.Rect;
 import glimantony.gmail.pool.BulletPool;
+import glimantony.gmail.pool.ExplosionPool;
 import glimantony.gmail.sprites.Background;
 import glimantony.gmail.sprites.Star;
+import glimantony.gmail.sprites.game.Explosion;
 import glimantony.gmail.sprites.game.MainShip;
 
 public class GameScreen extends Base2DScreen {
@@ -25,6 +27,7 @@ public class GameScreen extends Base2DScreen {
     private MainShip mainShip; //наш корабль
 
     private BulletPool bulletPool; //пул пуль
+    private ExplosionPool explosionPool; //пул взрыва
 
     private Music music; //фоновая музыка
 
@@ -41,6 +44,7 @@ public class GameScreen extends Base2DScreen {
         }
 
         bulletPool = new BulletPool();
+        explosionPool = new ExplosionPool(atlas);
         mainShip = new MainShip(atlas, bulletPool);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music_1.mp3")); //подключаем музыку
@@ -67,6 +71,7 @@ public class GameScreen extends Base2DScreen {
         }
         mainShip.update(delta);
         bulletPool.updateActiveSprites(delta); //чтобы наши пули смогли лететь
+        explosionPool.updateActiveSprites(delta); //чтобы нпроигрывался взрыв
     }
 
     /**
@@ -74,6 +79,7 @@ public class GameScreen extends Base2DScreen {
      */
     public void deleteAllDestroied(){
         bulletPool.freeAllDestroiedSprites();
+        explosionPool.freeAllDestroiedSprites();
     }
 
     /**
@@ -91,6 +97,7 @@ public class GameScreen extends Base2DScreen {
         }
         mainShip.draw(batch);
         bulletPool.drawActiveSprites(batch);
+        explosionPool.drawActiveSprites(batch);
         batch.end();
     }
 
@@ -109,6 +116,7 @@ public class GameScreen extends Base2DScreen {
         bg.dispose();
         atlas.dispose();
         bulletPool.dispose();
+        explosionPool.dispose();
         mainShip.dispose();
         music.dispose();
         super.dispose();
@@ -128,6 +136,10 @@ public class GameScreen extends Base2DScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
+        { //протестируем взрыв
+            Explosion explosion = explosionPool.obtain(); //достаем из пула свободные объекты
+            explosion.set(0.1f, touch);
+        }
         mainShip.touchDown(touch, pointer); //передаем кораблю событие
         return super.touchDown(touch, pointer);
     }
