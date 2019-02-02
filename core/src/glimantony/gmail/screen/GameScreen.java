@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.List;
+
 import glimantony.gmail.base.Base2DScreen;
 import glimantony.gmail.math.Rect;
 import glimantony.gmail.pool.BulletPool;
@@ -15,6 +17,7 @@ import glimantony.gmail.pool.EnemyPool;
 import glimantony.gmail.pool.ExplosionPool;
 import glimantony.gmail.sprites.Background;
 import glimantony.gmail.sprites.Star;
+import glimantony.gmail.sprites.game.Enemy;
 import glimantony.gmail.sprites.game.Explosion;
 import glimantony.gmail.sprites.game.MainShip;
 import glimantony.gmail.utils.EnemyEmitter;
@@ -66,6 +69,7 @@ public class GameScreen extends Base2DScreen {
     public void render(float delta) {
         super.render(delta);
         update(delta);
+        checkCollision(); //проверка а пересечения
         deleteAllDestroied(); //все что вылетело за экран будет перемещаться в список свободных о-ов
         draw();
     }
@@ -74,7 +78,7 @@ public class GameScreen extends Base2DScreen {
      * Метод как подметод render(float delta)
      * @param delta
      */
-    public void update(float delta){
+    private void update(float delta){
         for (int i = 0; i < stars.length; i++) {
             stars[i].update(delta);
         }
@@ -87,9 +91,26 @@ public class GameScreen extends Base2DScreen {
     }
 
     /**
+     * Метод проверит, пересекаются-ли графические о-ты
+     */
+    private void checkCollision(){
+        //проверим пересечение нашег корабля с вражеским
+        List<Enemy> enemyList = enemyPool.getActiveObjects();//список всех врагов находящихся на экране
+        for (Enemy enemy : enemyList) {
+            if (enemy.isDestroied()) continue; //если корабль уже уничтожен, то он не принимает участия в игровом процессе
+            float minDistanceBetweenShips = enemy.getHalfHeight() + mainShip.getHalfHeight(); //произвольно рассчитываем
+            if (enemy.pos.dst2(mainShip.pos) <= minDistanceBetweenShips * minDistanceBetweenShips){
+                enemy.destroy();
+                return;
+            }
+        }
+
+    }
+
+    /**
      *
      */
-    public void deleteAllDestroied(){
+    private void deleteAllDestroied(){
         bulletPool.freeAllDestroiedSprites();
         explosionPool.freeAllDestroiedSprites();
         enemyPool.freeAllDestroiedSprites();
@@ -99,7 +120,7 @@ public class GameScreen extends Base2DScreen {
      * Метод как подметод render(float delta)
      * Отвечает за всю отресовку
      */
-    public void draw(){
+    private void draw(){
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

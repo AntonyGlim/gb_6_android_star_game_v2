@@ -71,10 +71,14 @@ public class Enemy extends Ship {
                 }
                 if (getBottom() < worldBounds.getBottom()){ //по достижению нижней границы экрана
                     destroy(); //корабль исчезнет
-                    boom(); //взрыв корабля
                 }
                 break;
         }
     }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+        boom(); //взрыв корабля
+    }
 }
