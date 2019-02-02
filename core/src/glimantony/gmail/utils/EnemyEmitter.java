@@ -75,17 +75,44 @@ public class EnemyEmitter {
         if (generateTimer >= generateInterval){ //значит генерируем новый корабль
             generateTimer = 0f;
             Enemy enemy = enemyPool.obtain(); //достаем из пула овый корабль
-            enemy.set(
-                    enemySmallRegions,
-                    enemySmallSpeed,
-                    bulletRegion,
-                    ENEMY_SMALL_BULLET_HEIGHT,
-                    ENEMY_SMALL_BULLET_SPEED_Y,
-                    ENEMY_SMALL_DAMAGE,
-                    ENEMY_SMALL_RELOAD_INTERVAL,
-                    ENEMY_SMALL_HEIGHT,
-                    ENEMY_SMALL_HP
-            ); //настройка корабля
+            float shipsType = (float) Math.random(); //случайное число для генерации кораблей
+            if (shipsType <= 0.5f) { //вероятность 50% - малый корабль
+                enemy.set(
+                        enemySmallRegions,
+                        enemySmallSpeed,
+                        bulletRegion,
+                        ENEMY_SMALL_BULLET_HEIGHT,
+                        ENEMY_SMALL_BULLET_SPEED_Y,
+                        ENEMY_SMALL_DAMAGE,
+                        ENEMY_SMALL_RELOAD_INTERVAL,
+                        ENEMY_SMALL_HEIGHT,
+                        ENEMY_SMALL_HP
+                ); //настройка корабля
+            } else if (shipsType > 0.5 && shipsType <= 0.85){ //вероятность 35% - средний корабль
+                enemy.set(
+                        enemyMiddleRegions,
+                        enemyMiddleSpeed,
+                        bulletRegion,
+                        ENEMY_MIDDLE_BULLET_HEIGHT,
+                        ENEMY_MIDDLE_BULLET_SPEED_Y,
+                        ENEMY_MIDDLE_DAMAGE,
+                        ENEMY_MIDDLE_RELOAD_INTERVAL,
+                        ENEMY_MIDDLE_HEIGHT,
+                        ENEMY_MIDDLE_HP
+                ); //настройка корабля
+            } else if (shipsType > 0.85 && shipsType <= 0.99){ //вероятность 35% - средний корабль
+                enemy.set(
+                        enemyLargeRegions,
+                        enemyLargeSpeed,
+                        bulletRegion,
+                        ENEMY_LARGE_BULLET_HEIGHT,
+                        ENEMY_LARGE_BULLET_SPEED_Y,
+                        ENEMY_LARGE_DAMAGE,
+                        ENEMY_LARGE_RELOAD_INTERVAL,
+                        ENEMY_LARGE_HEIGHT,
+                        ENEMY_LARGE_HP
+                ); //настройка корабля
+            }
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth()); //позицыя по Х
             enemy.setBottom(worldBounds.getTop()); //позицыя по Y
         }
