@@ -10,6 +10,10 @@ import glimantony.gmail.pool.ExplosionPool;
 
 public class Enemy extends Ship {
 
+    private enum State {DESCENT, FIGHT} //состояние нашего корабля DESCENT - выползает на экран, FIGHT - ведет бой
+    private State state;
+    private Vector2 descentSpeed = new Vector2(0, -0.5f); //на время появления, у корабля будет скорость выше
+
     private Vector2 speed0 = new Vector2();
 
     public Enemy(Sound shootSound, BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds) {
@@ -44,21 +48,32 @@ public class Enemy extends Ship {
         this.hp = hp;
 
         reloadTimer = reloadInterval; //корабль начнет стрелять при появлении
-        speed.set(speed0);
+        speed.set(descentSpeed);
+        state = State.DESCENT; //изначально корабль в состоянии подхода к экрану
     }
 
     @Override
     public void update(float delta) { //позволит кораблю лететь по экрану
         super.update(delta);
         this.pos.mulAdd(speed, delta);
-        reloadTimer += delta; //научим корабль стрелять
-        if (reloadTimer >= reloadInterval){
-            reloadTimer = 0f;
-            shoot();
-        }
-        if (getBottom() < worldBounds.getBottom()){ //по достижению нижней границы экрана
-            destroy(); //корабль исчезнет
-            boom(); //взрыв корабля
+        switch (state){ //корабль в режиме боя, или только появляется на экран7
+            case DESCENT:
+                if (getTop() <= worldBounds.getTop()){ //если нос корабля
+                    speed.set(speed0);
+                    state = State.FIGHT;
+                }
+                break;
+            case FIGHT:
+                reloadTimer += delta; //научим корабль стрелять
+                if (reloadTimer >= reloadInterval){
+                    reloadTimer = 0f;
+                    shoot();
+                }
+                if (getBottom() < worldBounds.getBottom()){ //по достижению нижней границы экрана
+                    destroy(); //корабль исчезнет
+                    boom(); //взрыв корабля
+                }
+                break;
         }
     }
 
