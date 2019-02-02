@@ -4,14 +4,16 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import glimantony.gmail.math.Rect;
 import glimantony.gmail.pool.BulletPool;
 
 public class Enemy extends Ship {
 
     private Vector2 speed0 = new Vector2();
 
-    public Enemy(Sound shootSound, BulletPool bulletPool) {
+    public Enemy(Sound shootSound, BulletPool bulletPool, Rect worldBounds) {
         super();
+        this.worldBounds = worldBounds;
         this.shootSound = shootSound;
         this.bulletPool = bulletPool;
         this.speed.set(speed0);
@@ -47,5 +49,15 @@ public class Enemy extends Ship {
     public void update(float delta) { //позволит кораблю лететь по экрану
         super.update(delta);
         this.pos.mulAdd(speed, delta);
+        reloadTimer += delta; //научим корабль стрелять
+        if (reloadTimer >= reloadInterval){
+            reloadTimer = 0f;
+            shoot();
+        }
+        //TODO пока не работает
+        if (getBottom() < worldBounds.getBottom()){ //по достижению нижней границы экрана
+            destroy(); //корабль исчезнет
+        }
     }
+
 }
