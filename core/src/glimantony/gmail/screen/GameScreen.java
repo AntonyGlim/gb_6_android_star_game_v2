@@ -21,6 +21,7 @@ import glimantony.gmail.sprites.game.Bullet;
 import glimantony.gmail.sprites.game.Enemy;
 import glimantony.gmail.sprites.game.Explosion;
 import glimantony.gmail.sprites.game.MainShip;
+import glimantony.gmail.sprites.game.MessageGameOver;
 import glimantony.gmail.utils.EnemyEmitter;
 
 public class GameScreen extends Base2DScreen {
@@ -31,6 +32,7 @@ public class GameScreen extends Base2DScreen {
     private Texture bg; //фон
     private Background background; //обертка для фона
     private Star[] stars; //массив звезд
+    private MessageGameOver messageGameOver; //надпись конец игры
 
     private MainShip mainShip; //наш корабль
 
@@ -38,7 +40,7 @@ public class GameScreen extends Base2DScreen {
     private ExplosionPool explosionPool; //пул взрыва
     private EnemyPool enemyPool; //пул вражеских кораблей
 
-    private EnemyEmitter enemyEmitter;
+    private EnemyEmitter enemyEmitter; //фабрика врагов
 
     private Music music; //фоновая музыка
 
@@ -67,6 +69,8 @@ public class GameScreen extends Base2DScreen {
         music.setLooping(true); //сделаем повторяющейся
         music.setVolume(0.8f); //громкость музыки
         music.play();
+
+        messageGameOver = new MessageGameOver(atlas);
 
         startNewGame();
     }
