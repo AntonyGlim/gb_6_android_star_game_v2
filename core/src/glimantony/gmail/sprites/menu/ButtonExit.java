@@ -3,6 +3,7 @@ package glimantony.gmail.sprites.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
+import glimantony.gmail.base.ScaledTouchUpButton;
 import glimantony.gmail.math.Rect;
 
 public class ButtonExit extends ScaledTouchUpButton {

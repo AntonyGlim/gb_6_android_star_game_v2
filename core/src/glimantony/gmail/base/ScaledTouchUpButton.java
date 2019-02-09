@@ -1,4 +1,4 @@
-package glimantony.gmail.sprites.menu;
+package glimantony.gmail.base;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
