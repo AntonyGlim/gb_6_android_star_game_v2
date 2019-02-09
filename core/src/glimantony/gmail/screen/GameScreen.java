@@ -230,6 +230,8 @@ public class GameScreen extends Base2DScreen {
     private void startNewGame(){
         state = State.PLAYING; //режим ИГРА
         //почистим все активные о-ты в пулах, если они остались
-
+        bulletPool.freeAllActiveObjects();
+        enemyPool.freeAllActiveObjects();
+        explosionPool.freeAllActiveObjects();
     }
 }
