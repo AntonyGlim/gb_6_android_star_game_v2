@@ -31,8 +31,9 @@ public class MainShip extends Ship {
      * Принимает на вход одну текстуру
      * @param atlas
      */
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds) {
         super(atlas.findRegion("main_ship"), 1, 2, 2); //усовершенствованый конструктор
+        this.worldBounds = worldBounds;
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         this.reloadInterval = 0.3f; //интервал стрельбы
         setHeightProportion(0.12f); //Размеры корабля

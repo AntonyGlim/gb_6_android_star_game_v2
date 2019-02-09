@@ -60,7 +60,7 @@ public class GameScreen extends Base2DScreen {
 
         bulletPool = new BulletPool();
         explosionPool = new ExplosionPool(atlas);
-        mainShip = new MainShip(atlas, bulletPool, explosionPool);
+        mainShip = new MainShip(atlas, bulletPool, explosionPool, worldBounds);
         enemyPool = new EnemyPool(bulletPool, worldBounds, explosionPool, mainShip);
 
         enemyEmitter = new EnemyEmitter(atlas, enemyPool, worldBounds);
@@ -157,6 +157,9 @@ public class GameScreen extends Base2DScreen {
      *
      */
     private void deleteAllDestroied(){
+        if (mainShip.isDestroied()){
+            state = State.GAME_OVER;
+        }
         bulletPool.freeAllDestroiedSprites();
         explosionPool.freeAllDestroiedSprites();
         enemyPool.freeAllDestroiedSprites();
