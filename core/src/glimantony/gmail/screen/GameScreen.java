@@ -7,8 +7,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Align;
 
 import java.util.List;
+
+import javax.swing.GroupLayout;
 
 import glimantony.gmail.base.Base2DScreen;
 import glimantony.gmail.math.Rect;
@@ -28,7 +31,7 @@ import glimantony.gmail.utils.Font;
 
 public class GameScreen extends Base2DScreen {
 
-    private static final String FRAGS = "FRAGS: "; //чтобы избежать постоянного создания о-ов типа стринг
+    private static final String FRAGS = "FR: "; //чтобы избежать постоянного создания о-ов типа стринг
     private static final String HP = "HP: "; //чтобы избежать постоянного создания о-ов типа стринг
     private static final String LEVEL = "LEVEL: "; //чтобы избежать постоянного создания о-ов типа стринг
 
@@ -223,8 +226,8 @@ public class GameScreen extends Base2DScreen {
         sbHP.setLength(0); //возвращаемся в начальную позицию
         sbLevel.setLength(0); //возвращаемся в начальную позицию
         font.draw(batch, sbFrags.append(FRAGS).append(frags), worldBounds.getLeft(), worldBounds.getTop());
-        font.draw(batch, sbHP.append(HP).append(mainShip.getHp()), worldBounds.pos.x, worldBounds.getTop()); //в середине
-        font.draw(batch, sbLevel.append(LEVEL).append(1), worldBounds.getRight()-0.1f, worldBounds.getTop());
+        font.draw(batch, sbHP.append(HP).append(mainShip.getHp()), worldBounds.getRight(), worldBounds.getTop(), Align.right); //в середине
+        font.draw(batch, sbLevel.append(LEVEL).append(1), worldBounds.pos.x, worldBounds.getTop(), Align.center);
     }
 
     @Override
