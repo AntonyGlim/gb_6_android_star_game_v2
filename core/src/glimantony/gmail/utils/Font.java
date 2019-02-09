@@ -15,7 +15,7 @@ public class Font extends BitmapFont {
      */
     public Font(String fontFile, String imageFile) {
         super(Gdx.files.internal(fontFile), Gdx.files.internal(imageFile), false, false);
-        getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear); //сглаживание может быть применено и к текстуре
+        getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear); //сглаживание может быть применено и к текстуре (увеличение и уменьшение)
     }
 
     /**

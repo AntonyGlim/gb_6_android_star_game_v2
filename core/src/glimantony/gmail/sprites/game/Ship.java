@@ -92,4 +92,8 @@ public class Ship extends Sprite {
     public int getBulletDamage() {
         return bulletDamage;
     }
+
+    public int getHp() {
+        return hp;
+    }
 }

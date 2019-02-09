@@ -29,6 +29,9 @@ import glimantony.gmail.utils.Font;
 public class GameScreen extends Base2DScreen {
 
     private static final String FRAGS = "FRAGS: "; //чтобы избежать постоянного создания о-ов типа стринг
+    private static final String HP = "HP: "; //чтобы избежать постоянного создания о-ов типа стринг
+    private static final String LEVEL = "LEVEL: "; //чтобы избежать постоянного создания о-ов типа стринг
+
     private enum State {PLAYING, GAME_OVER} //делаем 2 состояния для экрана
 
     private TextureAtlas atlas;
@@ -50,6 +53,8 @@ public class GameScreen extends Base2DScreen {
 
     private Font font; //шрифт
     private StringBuilder sbFrags = new StringBuilder(); //чтобы избежать постоянного создания о-ов типа стринг
+    private StringBuilder sbHP = new StringBuilder(); //чтобы избежать постоянного создания о-ов типа стринг
+    private StringBuilder sbLevel = new StringBuilder(); //чтобы избежать постоянного создания о-ов типа стринг
 
     private State state; //для определения в каком режиме находится игра
 
@@ -215,7 +220,11 @@ public class GameScreen extends Base2DScreen {
      */
     private void printInfo(){
         sbFrags.setLength(0); //возвращаемся в начальную позицию
+        sbHP.setLength(0); //возвращаемся в начальную позицию
+        sbLevel.setLength(0); //возвращаемся в начальную позицию
         font.draw(batch, sbFrags.append(FRAGS).append(frags), worldBounds.getLeft(), worldBounds.getTop());
+        font.draw(batch, sbHP.append(HP).append(mainShip.getHp()), worldBounds.pos.x, worldBounds.getTop()); //в середине
+        font.draw(batch, sbLevel.append(LEVEL).append(1), worldBounds.getRight()-0.1f, worldBounds.getTop());
     }
 
     @Override
@@ -237,6 +246,7 @@ public class GameScreen extends Base2DScreen {
         enemyPool.dispose();
         mainShip.dispose();
         music.dispose();
+        font.dispose();
         super.dispose();
     }
 
