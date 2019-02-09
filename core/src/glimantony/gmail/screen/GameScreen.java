@@ -251,7 +251,7 @@ public class GameScreen extends Base2DScreen {
     /**
      * Метод, в котором мы будем устанавливать все значения по умолчанию
      */
-    private void startNewGame(){
+    public void startNewGame(){
         state = State.PLAYING; //режим ИГРА
 
         mainShip.startNewGame(); //для корабля
