@@ -41,8 +41,18 @@ public class MainShip extends Ship {
         this.bulletSpeed = new Vector2(0, 0.5f); //устанавливаем скорост пули
         this.bulletHeight = 0.012f; //устанавливаем размеры пули
         this.bulletDamage = 1; //урон наносимый пулей
-        this.hp = 1; //количество жизней корабля
+
         this.explosionPool = explosionPool;
+    }
+
+    /**
+     * Запуск новой игры
+     */
+    public void startNewGame(){
+        stop(); //если корабль двигался то нужно его остановить
+        pos.x = worldBounds.pos.x; //устанавливаем корабль по центру
+        this.hp = 1; //количество жизней корабля (устанавливаем/восстанавливаем)
+        unDestroy(); //больше не считается уничтоженным
     }
 
     @Override

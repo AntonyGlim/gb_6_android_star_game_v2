@@ -122,7 +122,7 @@ public class Sprite extends Rect {
     /**
      * Сбрасывает метку о-кта на удаление, мы сможем его использовать повторно
      */
-    public void undestroy(){
+    public void unDestroy(){
         this.isDestroied = false;
     }
 

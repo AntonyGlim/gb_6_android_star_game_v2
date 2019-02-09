@@ -67,6 +67,8 @@ public class GameScreen extends Base2DScreen {
         music.setLooping(true); //сделаем повторяющейся
         music.setVolume(0.8f); //громкость музыки
         music.play();
+
+        startNewGame();
     }
 
     @Override
@@ -229,6 +231,9 @@ public class GameScreen extends Base2DScreen {
      */
     private void startNewGame(){
         state = State.PLAYING; //режим ИГРА
+
+        mainShip.startNewGame(); //для корабля
+
         //почистим все активные о-ты в пулах, если они остались
         bulletPool.freeAllActiveObjects();
         enemyPool.freeAllActiveObjects();
