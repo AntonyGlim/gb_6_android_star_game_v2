@@ -117,7 +117,7 @@ public class GameScreen extends Base2DScreen {
                 mainShip.update(delta);
                 bulletPool.updateActiveSprites(delta); //чтобы наши пули смогли лететь
                 enemyPool.updateActiveSprites(delta); //обновление пула врагов
-                enemyEmitter.generate(delta); //генерация врагов
+                enemyEmitter.generate(delta, frags); //генерация врагов
                 break;
             case GAME_OVER:
                 break;
@@ -227,7 +227,7 @@ public class GameScreen extends Base2DScreen {
         sbLevel.setLength(0); //возвращаемся в начальную позицию
         font.draw(batch, sbFrags.append(FRAGS).append(frags), worldBounds.getLeft(), worldBounds.getTop());
         font.draw(batch, sbHP.append(HP).append(mainShip.getHp()), worldBounds.getRight(), worldBounds.getTop(), Align.right); //в середине
-        font.draw(batch, sbLevel.append(LEVEL).append(1), worldBounds.pos.x, worldBounds.getTop(), Align.center);
+        font.draw(batch, sbLevel.append(LEVEL).append(enemyEmitter.getLevel()), worldBounds.pos.x, worldBounds.getTop(), Align.center);
     }
 
     @Override
@@ -298,6 +298,7 @@ public class GameScreen extends Base2DScreen {
 
         mainShip.startNewGame(); //для корабля
         frags = 0;
+        enemyEmitter.setLevel(1);
 
         //почистим все активные о-ты в пулах, если они остались
         bulletPool.freeAllActiveObjects();

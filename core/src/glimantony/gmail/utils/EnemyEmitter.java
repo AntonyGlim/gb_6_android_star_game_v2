@@ -55,6 +55,8 @@ public class EnemyEmitter {
 
     private Rect worldBounds; //границы мира
 
+    private int level; //уровень игры
+
     public EnemyEmitter(TextureAtlas atlas, EnemyPool enemyPool, Rect worldBounds) {
 
         this.enemyPool = enemyPool;
@@ -70,7 +72,13 @@ public class EnemyEmitter {
         this.worldBounds = worldBounds;
     }
 
-    public void generate(float delta){
+    /**
+     *
+     * @param delta
+     * @param frags - сколько убили врагов
+     */
+    public void generate(float delta, int frags){
+        level = frags / 20 + 1; //расчитываем уровень игры
         generateTimer += delta;
         if (generateTimer >= generateInterval){ //значит генерируем новый корабль
             generateTimer = 0f;
@@ -81,9 +89,9 @@ public class EnemyEmitter {
                         enemySmallRegions,
                         enemySmallSpeed,
                         bulletRegion,
-                        ENEMY_SMALL_BULLET_HEIGHT,
+                        ENEMY_SMALL_BULLET_HEIGHT * level,
                         ENEMY_SMALL_BULLET_SPEED_Y,
-                        ENEMY_SMALL_DAMAGE,
+                        ENEMY_SMALL_DAMAGE * level,
                         ENEMY_SMALL_RELOAD_INTERVAL,
                         ENEMY_SMALL_HEIGHT,
                         ENEMY_SMALL_HP
@@ -93,9 +101,9 @@ public class EnemyEmitter {
                         enemyMiddleRegions,
                         enemyMiddleSpeed,
                         bulletRegion,
-                        ENEMY_MIDDLE_BULLET_HEIGHT,
+                        ENEMY_MIDDLE_BULLET_HEIGHT * level,
                         ENEMY_MIDDLE_BULLET_SPEED_Y,
-                        ENEMY_MIDDLE_DAMAGE,
+                        ENEMY_MIDDLE_DAMAGE * level,
                         ENEMY_MIDDLE_RELOAD_INTERVAL,
                         ENEMY_MIDDLE_HEIGHT,
                         ENEMY_MIDDLE_HP
@@ -105,9 +113,9 @@ public class EnemyEmitter {
                         enemyLargeRegions,
                         enemyLargeSpeed,
                         bulletRegion,
-                        ENEMY_LARGE_BULLET_HEIGHT,
+                        ENEMY_LARGE_BULLET_HEIGHT * level,
                         ENEMY_LARGE_BULLET_SPEED_Y,
-                        ENEMY_LARGE_DAMAGE,
+                        ENEMY_LARGE_DAMAGE * level,
                         ENEMY_LARGE_RELOAD_INTERVAL,
                         ENEMY_LARGE_HEIGHT,
                         ENEMY_LARGE_HP
@@ -116,5 +124,13 @@ public class EnemyEmitter {
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth()); //позицыя по Х
             enemy.setBottom(worldBounds.getTop()); //позицыя по Y
         }
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
     }
 }
