@@ -173,14 +173,21 @@ public class GameScreen extends Base2DScreen {
         batch.begin();
         background.draw(batch); //фон сам знает как себя нарисовать
         for (int i = 0; i < stars.length; i++) {
-            stars[i].draw(batch);
+            stars[i].draw(batch); //рисуем звезды
         }
-        if (!mainShip.isDestroied()){ //если наш корабль не уничтожен
-            mainShip.draw(batch);
+
+        switch (state){
+            case PLAYING:
+                mainShip.draw(batch);
+                bulletPool.drawActiveSprites(batch);
+                enemyPool.drawActiveSprites(batch);
+                break;
+            case GAME_OVER:
+                messageGameOver.draw(batch);
+                break;
         }
-        bulletPool.drawActiveSprites(batch);
-        explosionPool.drawActiveSprites(batch);
-        enemyPool.drawActiveSprites(batch);
+
+        explosionPool.drawActiveSprites(batch); //рисуется в любом случае (поверх остальных О-ов)
         batch.end();
     }
 
