@@ -25,6 +25,8 @@ import glimantony.gmail.utils.EnemyEmitter;
 
 public class GameScreen extends Base2DScreen {
 
+    private enum State {PLAYING, GAME_OVER} //делаем 2 состояния для экрана
+
     private TextureAtlas atlas;
     private Texture bg; //фон
     private Background background; //обертка для фона
@@ -40,6 +42,7 @@ public class GameScreen extends Base2DScreen {
 
     private Music music; //фоновая музыка
 
+    private State state; //для определения в каком режиме находится игра
 
 
     @Override
@@ -219,5 +222,14 @@ public class GameScreen extends Base2DScreen {
             mainShip.touchUp(touch, pointer); //передаем кораблю событие
         }
         return super.touchUp(touch, pointer);
+    }
+
+    /**
+     * Метод, в котором мы будем устанавливать все значения по умолчанию
+     */
+    private void startNewGame(){
+        state = State.PLAYING; //режим ИГРА
+        //почистим все активные о-ты в пулах, если они остались
+
     }
 }

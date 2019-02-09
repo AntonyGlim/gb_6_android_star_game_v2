@@ -70,6 +70,14 @@ public abstract class SpritesPool <T extends Sprite> {
     }
 
     /**
+     * Очистка всех существующих о-ов
+     */
+    public void freeAllActiveObjects(){
+        freeObjects.addAll(activeObjects);
+        activeObjects.clear();
+    }
+
+    /**
      * Метод освобождает о-ты
      */
     public void free(T object){
@@ -90,4 +98,7 @@ public abstract class SpritesPool <T extends Sprite> {
         activeObjects.clear();
         freeObjects.clear();
     }
+
+
+
 }
