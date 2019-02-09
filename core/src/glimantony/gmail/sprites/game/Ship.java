@@ -81,6 +81,7 @@ public class Ship extends Sprite {
         damageTimer = 0; //пока таймер не увеличиться до damageInterval в методк update()
         hp -= damage; //уменьшаем кол-во жизней корабля
         if (hp <= 0){
+            hp = 0;
             destroy(); //взрываем корабль
         }
     }
