@@ -92,14 +92,17 @@ public class GameScreen extends Base2DScreen {
         for (int i = 0; i < stars.length; i++) {
             stars[i].update(delta);
         }
-        if (!mainShip.isDestroied()){ //если наш корабль не уничтожен
-            mainShip.update(delta);
-        }
-        bulletPool.updateActiveSprites(delta); //чтобы наши пули смогли лететь
         explosionPool.updateActiveSprites(delta); //чтобы нпроигрывался взрыв
-        enemyPool.updateActiveSprites(delta);
-
-        enemyEmitter.generate(delta);
+        switch (state){
+            case PLAYING:
+                mainShip.update(delta);
+                bulletPool.updateActiveSprites(delta); //чтобы наши пули смогли лететь
+                enemyPool.updateActiveSprites(delta); //обновление пула врагов
+                enemyEmitter.generate(delta); //генерация врагов
+                break;
+            case GAME_OVER:
+                break;
+        }
     }
 
     /**
