@@ -22,6 +22,7 @@ import glimantony.gmail.sprites.game.Enemy;
 import glimantony.gmail.sprites.game.Explosion;
 import glimantony.gmail.sprites.game.MainShip;
 import glimantony.gmail.sprites.game.MessageGameOver;
+import glimantony.gmail.sprites.game.StartNewGameButton;
 import glimantony.gmail.utils.EnemyEmitter;
 
 public class GameScreen extends Base2DScreen {
@@ -33,6 +34,7 @@ public class GameScreen extends Base2DScreen {
     private Background background; //обертка для фона
     private Star[] stars; //массив звезд
     private MessageGameOver messageGameOver; //надпись конец игры
+    private StartNewGameButton startNewGameButton; //кнопка перезапуска игры
 
     private MainShip mainShip; //наш корабль
 
@@ -71,6 +73,7 @@ public class GameScreen extends Base2DScreen {
         music.play();
 
         messageGameOver = new MessageGameOver(atlas);
+        startNewGameButton = new StartNewGameButton(atlas, this);
 
         startNewGame();
     }
@@ -187,6 +190,7 @@ public class GameScreen extends Base2DScreen {
                 break;
             case GAME_OVER:
                 messageGameOver.draw(batch);
+                startNewGameButton.draw(batch);
                 break;
         }
 
@@ -234,16 +238,20 @@ public class GameScreen extends Base2DScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        if (!mainShip.isDestroied()){ //если наш корабль не уничтожен
+        if (state == State.PLAYING){ //если наш корабль не уничтожен
             mainShip.touchDown(touch, pointer); //передаем кораблю событие
+        } else {
+            startNewGameButton.touchDown(touch, pointer);
         }
         return super.touchDown(touch, pointer);
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
-        if (!mainShip.isDestroied()){ //если наш корабль не уничтожен
+        if (state == State.PLAYING){ //если наш корабль не уничтожен
             mainShip.touchUp(touch, pointer); //передаем кораблю событие
+        } else {
+            startNewGameButton.touchUp(touch, pointer);
         }
         return super.touchUp(touch, pointer);
     }
