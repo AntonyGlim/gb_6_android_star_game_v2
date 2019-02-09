@@ -108,42 +108,47 @@ public class GameScreen extends Base2DScreen {
     /**
      * Метод проверит, пересекаются-ли графические о-ты
      */
-    private void checkCollision(){
-        //проверим пересечение нашег корабля с вражеским
-        List<Enemy> enemyList = enemyPool.getActiveObjects();//список всех врагов находящихся на экране
-        for (Enemy enemy : enemyList) {
-            if (enemy.isDestroied()) continue; //если корабль уже уничтожен, то он не принимает участия в игровом процессе
-            float minDistanceBetweenShips = enemy.getHalfHeight() + mainShip.getHalfHeight(); //произвольно рассчитываем
-            if (enemy.pos.dst2(mainShip.pos) <= minDistanceBetweenShips * minDistanceBetweenShips){
-                enemy.destroy();
-                mainShip.damage(enemy.getBulletDamage());
-                return;
-            }
-        }
+    private void checkCollision() {
+        if (state == State.PLAYING) { //любые коллизии проверяются только для состояния ИГРА
 
-        //проверим пересечение наших пуль с вражескими кораблями
-        List<Bullet> bulletList = bulletPool.getActiveObjects();//список всех пуль находящихся на экране
-        for (Enemy enemy : enemyList) {
-            if (enemy.isDestroied()) continue; //если корабль уже уничтожен, то он не принимает участия в игровом процессе
+            //проверим пересечение нашег корабля с вражеским
+            List<Enemy> enemyList = enemyPool.getActiveObjects();//список всех врагов находящихся на экране
+            for (Enemy enemy : enemyList) {
+                if (enemy.isDestroied())
+                    continue; //если корабль уже уничтожен, то он не принимает участия в игровом процессе
+                float minDistanceBetweenShips = enemy.getHalfHeight() + mainShip.getHalfHeight(); //произвольно рассчитываем
+                if (enemy.pos.dst2(mainShip.pos) <= minDistanceBetweenShips * minDistanceBetweenShips) {
+                    enemy.destroy();
+                    mainShip.damage(enemy.getBulletDamage());
+                    return;
+                }
+            }
+
+            //проверим пересечение наших пуль с вражескими кораблями
+            List<Bullet> bulletList = bulletPool.getActiveObjects();//список всех пуль находящихся на экране
+            for (Enemy enemy : enemyList) {
+                if (enemy.isDestroied())
+                    continue; //если корабль уже уничтожен, то он не принимает участия в игровом процессе
+                for (Bullet bullet : bulletList) {
+                    if (bullet.getOwnerOfBullet() != mainShip || bullet.isDestroied()) { //если пуля не наша или уничтожена
+                        continue;
+                    }
+                    if (enemy.isBulletCollision(bullet)) { //если пуля в пределах корабля (по центру)
+                        enemy.damage(mainShip.getBulletDamage()); //противнику наноситься урон, он меняет цвет
+                        bullet.destroy(); //уничтожаем пулю
+                    }
+                }
+            }
+
+            //проверяем пересечение вражеских пуь с нашими кораблями
             for (Bullet bullet : bulletList) {
-                if (bullet.getOwnerOfBullet() != mainShip || bullet.isDestroied()){ //если пуля не наша или уничтожена
+                if (bullet.getOwnerOfBullet() == mainShip || bullet.isDestroied()) { //если пуля наша или уничтожена
                     continue;
                 }
-                if (enemy.isBulletCollision(bullet)){ //если пуля в пределах корабля (по центру)
-                    enemy.damage(mainShip.getBulletDamage()); //противнику наноситься урон, он меняет цвет
-                    bullet.destroy(); //уничтожаем пулю
+                if (mainShip.isBulletCollisionMainShip(bullet)) {
+                    mainShip.damage(bullet.getDemage()); //наносим кораблю урон
+                    bullet.destroy();
                 }
-            }
-        }
-
-        //проверяем пересечение вражеских пуь с нашими кораблями
-        for (Bullet bullet : bulletList) {
-            if (bullet.getOwnerOfBullet() == mainShip || bullet.isDestroied()){ //если пуля наша или уничтожена
-                continue;
-            }
-            if (mainShip.isBulletCollisionMainShip(bullet)){
-                mainShip.damage(bullet.getDemage()); //наносим кораблю урон
-                bullet.destroy();
             }
         }
     }
