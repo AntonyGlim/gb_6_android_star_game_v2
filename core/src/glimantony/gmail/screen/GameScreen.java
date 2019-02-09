@@ -24,9 +24,11 @@ import glimantony.gmail.sprites.game.MainShip;
 import glimantony.gmail.sprites.game.MessageGameOver;
 import glimantony.gmail.sprites.game.StartNewGameButton;
 import glimantony.gmail.utils.EnemyEmitter;
+import glimantony.gmail.utils.Font;
 
 public class GameScreen extends Base2DScreen {
 
+    private static final String FRAGS = "FRAGS: "; //чтобы избежать постоянного создания о-ов типа стринг
     private enum State {PLAYING, GAME_OVER} //делаем 2 состояния для экрана
 
     private TextureAtlas atlas;
@@ -46,9 +48,12 @@ public class GameScreen extends Base2DScreen {
 
     private Music music; //фоновая музыка
 
+    private Font font; //шрифт
+    private StringBuilder sbFrags = new StringBuilder(); //чтобы избежать постоянного создания о-ов типа стринг
+
     private State state; //для определения в каком режиме находится игра
 
-    int frags = 0; //количество убитых врагов
+    private int frags = 0; //количество убитых врагов
 
 
     @Override
@@ -76,7 +81,8 @@ public class GameScreen extends Base2DScreen {
 
         messageGameOver = new MessageGameOver(atlas);
         startNewGameButton = new StartNewGameButton(atlas, this);
-
+        this.font = new Font("fonts/starGameFont.fnt", "fonts/starGameFont.png");
+        this.font.setSize(0.03f); //настройка размеров шрифта
         startNewGame();
     }
 
@@ -200,7 +206,16 @@ public class GameScreen extends Base2DScreen {
         }
 
         explosionPool.drawActiveSprites(batch); //рисуется в любом случае (поверх остальных О-ов)
+        printInfo(); //вызываем перед end т.к. он тоже работает с batch
         batch.end();
+    }
+
+    /**
+     * Метод предназначен для вывода тестовой информации на экран
+     */
+    private void printInfo(){
+        sbFrags.setLength(0); //возвращаемся в начальную позицию
+        font.draw(batch, sbFrags.append(FRAGS).append(frags), worldBounds.getLeft(), worldBounds.getTop());
     }
 
     @Override
