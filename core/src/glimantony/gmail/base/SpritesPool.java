@@ -83,7 +83,7 @@ public abstract class SpritesPool <T extends Sprite> {
     public void free(T object){
         activeObjects.remove(object); //удаляем о-кт из списка активных
         freeObjects.add(object); //добавляем его в список свободных о-ов
-        object.undestroy();
+        object.unDestroy();
         System.out.println("obtain() : active/free" + activeObjects.size() + "/" + freeObjects.size());
     }
 
