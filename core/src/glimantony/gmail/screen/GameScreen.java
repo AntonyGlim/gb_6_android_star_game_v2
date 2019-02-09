@@ -48,6 +48,8 @@ public class GameScreen extends Base2DScreen {
 
     private State state; //для определения в каком режиме находится игра
 
+    int frags = 0; //количество убитых врагов
+
 
     @Override
     public void show() {
@@ -138,6 +140,9 @@ public class GameScreen extends Base2DScreen {
                     }
                     if (enemy.isBulletCollision(bullet)) { //если пуля в пределах корабля (по центру)
                         enemy.damage(mainShip.getBulletDamage()); //противнику наноситься урон, он меняет цвет
+                        if (enemy.isDestroied()){
+                            frags++;
+                        }
                         bullet.destroy(); //уничтожаем пулю
                     }
                 }
@@ -258,11 +263,13 @@ public class GameScreen extends Base2DScreen {
 
     /**
      * Метод, в котором мы будем устанавливать все значения по умолчанию
+     * Часть о-ов уже существует и мы их не создаем заново
      */
     public void startNewGame(){
         state = State.PLAYING; //режим ИГРА
 
         mainShip.startNewGame(); //для корабля
+        frags = 0;
 
         //почистим все активные о-ты в пулах, если они остались
         bulletPool.freeAllActiveObjects();
