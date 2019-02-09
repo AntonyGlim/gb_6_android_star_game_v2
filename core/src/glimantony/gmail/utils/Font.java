@@ -1,5 +1,6 @@
 package glimantony.gmail.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 /**
@@ -12,6 +13,13 @@ public class Font extends BitmapFont {
      * @param imageFile - сами буквы
      */
     public Font(String fontFile, String imageFile) {
-        super();
+        super(Gdx.files.internal(fontFile), Gdx.files.internal(imageFile), false, false);
+    }
+
+    /**
+     * Метод меняет размеры шрифта в пределах нашей кординатной сетки
+     */
+    public void setSize (float size){
+        getData().setScale(size / getCapHeight()); //getCapHeight() - величина заглавной буквы
     }
 }
