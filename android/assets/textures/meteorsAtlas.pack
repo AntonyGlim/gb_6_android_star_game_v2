@@ -1,0 +1,33 @@
+
+meteorsAtlas.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+meteor_1
+  rotate: false
+  xy: 1, 298
+  size: 402, 178
+  orig: 402, 178
+  offset: 0, 0
+  index: 1
+meteor_2
+  rotate: false
+  xy: 405, 327
+  size: 416, 149
+  orig: 416, 149
+  offset: 0, 0
+  index: 3
+meteor_3
+  rotate: false
+  xy: 1, 146
+  size: 404, 150
+  orig: 404, 150
+  offset: 0, 0
+  index: 2
+meteor_4
+  rotate: false
+  xy: 1, 1
+  size: 370, 143
+  orig: 370, 143
+  offset: 0, 0
+  index: 4
