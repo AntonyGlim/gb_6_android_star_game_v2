@@ -15,6 +15,7 @@ import javax.swing.GroupLayout;
 
 import glimantony.gmail.base.Base2DScreen;
 import glimantony.gmail.math.Rect;
+import glimantony.gmail.math.Rnd;
 import glimantony.gmail.pool.BulletPool;
 import glimantony.gmail.pool.EnemyPool;
 import glimantony.gmail.pool.ExplosionPool;
@@ -163,7 +164,7 @@ public class GameScreen extends Base2DScreen {
                 float minDistanceBetweenShips = meteor.getHalfHeight() + mainShip.getHalfHeight(); //произвольно рассчитываем
                 if (meteor.pos.dst2(mainShip.pos) <= minDistanceBetweenShips * minDistanceBetweenShips) {
                     meteor.destroy();
-                    mainShip.damage(meteor.getBulletDamage());
+                    mainShip.damage((int) Rnd.nextFloat(1, 10));
                     return;
                 }
             }

@@ -11,6 +11,8 @@ import glimantony.gmail.sprites.game.Meteor;
 
 /**
  * Класс предназначен для генерации метеоритов
+ * TODO добавить все имеющиеся метеориты
+ * TODO Создать 3 листа с метеоритами и вызывать их в случайном порядке
  */
 public class MeteorsEmitter {
 

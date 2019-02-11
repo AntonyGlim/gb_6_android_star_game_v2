@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import glimantony.gmail.math.Rect;
+import glimantony.gmail.math.Rnd;
 import glimantony.gmail.pool.BulletPool;
 import glimantony.gmail.pool.ExplosionPool;
 
@@ -17,6 +18,7 @@ public class Meteor extends Ship /*TODO временная мера, испра�
     private Vector2 speed0 = new Vector2();
 
     private MainShip mainShip; //для того, чтобы наносить урон при столкновении
+//    protected int meteorDamage; //урон наносимый метеоритом
 
     public Meteor(ExplosionPool explosionPool, Rect worldBounds, MainShip mainShip) {
         super();
@@ -24,6 +26,7 @@ public class Meteor extends Ship /*TODO временная мера, испра�
         this.speed.set(speed0);
         this.explosionPool = explosionPool;
         this.mainShip = mainShip;
+//        meteorDamage = (int) Rnd.nextFloat(1, 10);
     }
 
     public void set(
@@ -55,9 +58,8 @@ public class Meteor extends Ship /*TODO временная мера, испра�
                 }
                 break;*/
             case FIGHT:
-                if (getBottom() < worldBounds.getBottom()){ //по достижению нижней границы экрана TODO исправить, чтобы урон не наносился
-                    mainShip.damage(this.bulletDamage); //кораблю наноситься урон
-                    destroy(); //корабль исчезнет
+                if (getBottom() < worldBounds.getBottom() + getTop()){ //по достижению нижней границы экрана метеор продолжает двигаться за его пределы и урона не наносит
+                    destroy(); //метеор исчезнет
                 }
                 break;
         }
