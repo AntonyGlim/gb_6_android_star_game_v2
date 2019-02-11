@@ -15,19 +15,19 @@ import glimantony.gmail.sprites.game.Meteor;
 public class MeteorsEmitter {
 
     //сложность метеора 0 (EASY)
-    private static final float METEOR_EASY_HEIGHT = 0.08f; //размеры маленького метеора
+    private static final float METEOR_EASY_HEIGHT = 0.06f; //размеры маленького метеора
     private static final int METEOR_EASY_HP = 1; //количество жизней
 
     //сложность метеора 1 (SMALL)
-    private static final float METEOR_SMALL_HEIGHT = 0.1f; //размеры маленького метеора
+    private static final float METEOR_SMALL_HEIGHT = 0.07f; //размеры маленького метеора
     private static final int METEOR_SMALL_HP = 3; //количество жизней
 
     //сложность метеора 2 (MIDDLE)
-    private static final float METEOR_MIDDLE_HEIGHT = 0.15f; //размеры маленького метеора
+    private static final float METEOR_MIDDLE_HEIGHT = 0.075f; //размеры маленького метеора
     private static final int METEOR_MIDDLE_HP = 5; //количество жизней
 
     //сложность метеора 3 (LARGE)
-    private static final float METEOR_LARGE_HEIGHT = 0.17f; //размеры маленького метеора
+    private static final float METEOR_LARGE_HEIGHT = 0.08f; //размеры маленького метеора
     private static final int METEOR_LARGE_HP = 10; //количество жизней
 
     private Vector2 meteorEasySpeed = new Vector2(0, -0.25f); //скорость метеора
