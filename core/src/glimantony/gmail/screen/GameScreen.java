@@ -57,6 +57,7 @@ public class GameScreen extends Base2DScreen {
 
     private EnemyEmitter enemyEmitter; //фабрика врагов
     private MeteorsEmitter meteorsEmitter; //фабрика
+    private float meteorAngle = 0; //угол поворота метеорита
 
     private Music music; //фоновая музыка
 
@@ -250,7 +251,8 @@ public class GameScreen extends Base2DScreen {
                 mainShip.draw(batch);
                 bulletPool.drawActiveSprites(batch);
                 enemyPool.drawActiveSprites(batch);
-                meteorPool.drawActiveSprites(batch);
+                meteorPool.drawActiveSprites(batch, meteorAngle++);
+                if (meteorAngle == 359) meteorAngle = 0;
                 break;
             case GAME_OVER:
                 messageGameOver.draw(batch);
