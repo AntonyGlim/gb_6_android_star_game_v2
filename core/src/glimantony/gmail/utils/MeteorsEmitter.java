@@ -15,19 +15,19 @@ import glimantony.gmail.sprites.game.Meteor;
 public class MeteorsEmitter {
 
     //сложность метеора 0 (EASY)
-    private static final float METEOR_EASY_HEIGHT = 0.06f; //размеры маленького метеора
+    private static final float METEOR_EASY_HEIGHT = 0.04f; //размеры маленького метеора
     private static final int METEOR_EASY_HP = 2; //количество жизней
 
     //сложность метеора 1 (SMALL)
-    private static final float METEOR_SMALL_HEIGHT = 0.07f; //размеры маленького метеора
+    private static final float METEOR_SMALL_HEIGHT = 0.04f; //размеры маленького метеора
     private static final int METEOR_SMALL_HP = 3; //количество жизней
 
     //сложность метеора 2 (MIDDLE)
-    private static final float METEOR_MIDDLE_HEIGHT = 0.075f; //размеры маленького метеора
+    private static final float METEOR_MIDDLE_HEIGHT = 0.055f; //размеры маленького метеора
     private static final int METEOR_MIDDLE_HP = 4; //количество жизней
 
     //сложность метеора 3 (LARGE)
-    private static final float METEOR_LARGE_HEIGHT = 0.08f; //размеры маленького метеора
+    private static final float METEOR_LARGE_HEIGHT = 0.06f; //размеры маленького метеора
     private static final int METEOR_LARGE_HP = 5; //количество жизней
 
     private Vector2 meteorEasySpeed = new Vector2(0, - Rnd.nextFloat(0.2f, 0.3f)); //скорость метеора
@@ -54,13 +54,13 @@ public class MeteorsEmitter {
 
         this.meteorPool = meteorPool;
 
-        TextureRegion textureRegion0 = atlas.findRegion("meteor_1");
+        TextureRegion textureRegion0 = atlas.findRegion("meteor_4");
         this.meteorEasyRegions = Regions.split(textureRegion0, 1, 2, 2); //режем текстуру на части
-        TextureRegion textureRegion1 = atlas.findRegion("meteor_2");
+        TextureRegion textureRegion1 = atlas.findRegion("meteor_3");
         this.meteorSmallRegions = Regions.split(textureRegion1, 1, 2, 2); //режем текстуру на части
-        TextureRegion textureRegion2 = atlas.findRegion("meteor_3");
+        TextureRegion textureRegion2 = atlas.findRegion("meteor_2");
         this.meteorMiddleRegions = Regions.split(textureRegion2, 1, 2, 2); //режем текстуру на части
-        TextureRegion textureRegion3 = atlas.findRegion("meteor_4");
+        TextureRegion textureRegion3 = atlas.findRegion("meteor_1");
         this.meteorLargeRegions = Regions.split(textureRegion3, 1, 2, 2); //режем текстуру на части
 
         this.worldBounds = worldBounds;
