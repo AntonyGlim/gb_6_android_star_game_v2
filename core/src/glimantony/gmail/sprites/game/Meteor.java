@@ -8,6 +8,7 @@ import glimantony.gmail.math.Rect;
 import glimantony.gmail.math.Rnd;
 import glimantony.gmail.pool.BulletPool;
 import glimantony.gmail.pool.ExplosionPool;
+import glimantony.gmail.pool.MeteorExplosionPool;
 
 public class Meteor extends Ship /*TODO временная мера, исправить*/ {
 
@@ -17,14 +18,16 @@ public class Meteor extends Ship /*TODO временная мера, испра�
 
     private Vector2 speed0 = new Vector2();
 
+    private MeteorExplosionPool meteorExplosionPool;
+
     private MainShip mainShip; //для того, чтобы наносить урон при столкновении
 //    protected int meteorDamage; //урон наносимый метеоритом пока не учавствует. Задан в случайном порядке
 
-    public Meteor(ExplosionPool explosionPool, Rect worldBounds, MainShip mainShip) {
+    public Meteor(MeteorExplosionPool meteorExplosionPool, Rect worldBounds, MainShip mainShip) {
         super();
         this.worldBounds = worldBounds;
         this.speed.set(speed0);
-        this.explosionPool = explosionPool;
+        this.meteorExplosionPool = meteorExplosionPool;
         this.mainShip = mainShip;
 //        meteorDamage = (int) Rnd.nextFloat(1, 10);
     }
@@ -68,7 +71,7 @@ public class Meteor extends Ship /*TODO временная мера, испра�
     @Override
     public void destroy() {
         super.destroy();
-//        boom(); //взрыв корабля TODO исправить, чтобы урон не наносился
+        boom(); //взрыв корабля TODO исправить, чтобы урон не наносился
     }
 
     /**
@@ -82,5 +85,11 @@ public class Meteor extends Ship /*TODO временная мера, испра�
                 || bullet.getBottom() > getTop()
                 || bullet.getTop() < pos.y //пуля долетит до центра корабля
         );
+    }
+
+    @Override
+    public void boom() {
+        Explosion explosion = meteorExplosionPool.obtain();
+        explosion.set(getHeight(), pos); //размеры корабля и его местоположение
     }
 }

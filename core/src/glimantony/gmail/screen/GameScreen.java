@@ -19,6 +19,7 @@ import glimantony.gmail.math.Rnd;
 import glimantony.gmail.pool.BulletPool;
 import glimantony.gmail.pool.EnemyPool;
 import glimantony.gmail.pool.ExplosionPool;
+import glimantony.gmail.pool.MeteorExplosionPool;
 import glimantony.gmail.pool.MeteorPool;
 import glimantony.gmail.sprites.Background;
 import glimantony.gmail.sprites.Star;
@@ -55,6 +56,7 @@ public class GameScreen extends Base2DScreen {
     private ExplosionPool explosionPool; //пул взрыва
     private EnemyPool enemyPool; //пул вражеских кораблей
     private MeteorPool meteorPool; //пул метеоров
+    private MeteorExplosionPool meteorExplosionPool; //пул взрывов метеора
 
     private EnemyEmitter enemyEmitter; //фабрика врагов
     private MeteorsEmitter meteorsEmitter; //фабрика
@@ -86,9 +88,10 @@ public class GameScreen extends Base2DScreen {
 
         bulletPool = new BulletPool();
         explosionPool = new ExplosionPool(atlas);
+        meteorExplosionPool = new MeteorExplosionPool();
         mainShip = new MainShip(atlas, bulletPool, explosionPool, worldBounds);
         enemyPool = new EnemyPool(bulletPool, worldBounds, explosionPool, mainShip);
-        meteorPool = new MeteorPool(worldBounds, explosionPool, mainShip);
+        meteorPool = new MeteorPool(worldBounds, meteorExplosionPool, mainShip);
 
         enemyEmitter = new EnemyEmitter(atlas, enemyPool, worldBounds);
         meteorsEmitter = new MeteorsEmitter(atlasMeteors, meteorPool, worldBounds);
@@ -123,6 +126,7 @@ public class GameScreen extends Base2DScreen {
             stars[i].update(delta);
         }
         explosionPool.updateActiveSprites(delta); //чтобы нпроигрывался взрыв
+        meteorExplosionPool.updateActiveSprites(delta);
         switch (state){
             case PLAYING:
                 mainShip.update(delta);
@@ -229,6 +233,7 @@ public class GameScreen extends Base2DScreen {
         }
         bulletPool.freeAllDestroiedSprites();
         explosionPool.freeAllDestroiedSprites();
+        meteorExplosionPool.freeAllDestroiedSprites();
         enemyPool.freeAllDestroiedSprites();
         meteorPool.freeAllDestroiedSprites();
     }
@@ -262,6 +267,7 @@ public class GameScreen extends Base2DScreen {
         }
 
         explosionPool.drawActiveSprites(batch); //рисуется в любом случае (поверх остальных О-ов)
+        meteorExplosionPool.drawActiveSprites(batch);
         printInfo(); //вызываем перед end т.к. он тоже работает с batch
         batch.end();
     }
@@ -294,6 +300,7 @@ public class GameScreen extends Base2DScreen {
         atlas.dispose();
         bulletPool.dispose();
         explosionPool.dispose();
+        meteorExplosionPool.dispose();
         enemyPool.dispose();
         meteorPool.dispose();
         mainShip.dispose();
@@ -354,5 +361,6 @@ public class GameScreen extends Base2DScreen {
         enemyPool.freeAllActiveObjects();
         meteorPool.freeAllActiveObjects();
         explosionPool.freeAllActiveObjects();
+        meteorExplosionPool.freeAllActiveObjects();
     }
 }

@@ -12,18 +12,18 @@ import glimantony.gmail.sprites.game.Meteor;
 public class MeteorPool extends SpritesPool <Meteor> {
 
     private Rect worldBounds;
-    private ExplosionPool explosionPool;
+    private MeteorExplosionPool meteorExplosionPool;
     private MainShip mainShip;
 
-    public MeteorPool(Rect worldBounds, ExplosionPool explosionPool, MainShip mainShip) {
+    public MeteorPool(Rect worldBounds, MeteorExplosionPool meteorExplosionPool, MainShip mainShip) {
         this.worldBounds = worldBounds;
-        this.explosionPool = explosionPool;
+        this.meteorExplosionPool = meteorExplosionPool;
         this.mainShip = mainShip;
     }
 
     @Override
     protected Meteor newObject() {
-        return new Meteor(explosionPool, worldBounds, mainShip);
+        return new Meteor(meteorExplosionPool, worldBounds, mainShip);
     }
 
     @Override

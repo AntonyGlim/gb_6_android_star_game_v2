@@ -10,12 +10,12 @@ import glimantony.gmail.base.Sprite;
 import glimantony.gmail.base.SpritesPool;
 import glimantony.gmail.sprites.game.Explosion;
 
-public class meteorExplosionPool extends SpritesPool<Explosion> {
+public class MeteorExplosionPool extends SpritesPool<Explosion> {
     private Texture texture = new Texture("textures/meteorExplosion.png");
     private TextureRegion region = new TextureRegion(texture);
     private Sound explosionSound;
 
-    public meteorExplosionPool() {
+    public MeteorExplosionPool() {
         this.explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.mp3")); //TODO поменять музыку
     }
 
