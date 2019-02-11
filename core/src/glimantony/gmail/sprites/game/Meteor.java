@@ -18,7 +18,7 @@ public class Meteor extends Ship /*TODO временная мера, испра�
     private Vector2 speed0 = new Vector2();
 
     private MainShip mainShip; //для того, чтобы наносить урон при столкновении
-//    protected int meteorDamage; //урон наносимый метеоритом
+//    protected int meteorDamage; //урон наносимый метеоритом пока не учавствует. Задан в случайном порядке
 
     public Meteor(ExplosionPool explosionPool, Rect worldBounds, MainShip mainShip) {
         super();
