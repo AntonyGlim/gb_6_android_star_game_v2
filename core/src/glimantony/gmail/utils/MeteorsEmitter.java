@@ -16,7 +16,7 @@ public class MeteorsEmitter {
 
     //сложность метеора 0 (EASY)
     private static final float METEOR_EASY_HEIGHT = 0.06f; //размеры маленького метеора
-    private static final int METEOR_EASY_HP = 1; //количество жизней
+    private static final int METEOR_EASY_HP = 2; //количество жизней
 
     //сложность метеора 1 (SMALL)
     private static final float METEOR_SMALL_HEIGHT = 0.07f; //размеры маленького метеора
@@ -24,16 +24,17 @@ public class MeteorsEmitter {
 
     //сложность метеора 2 (MIDDLE)
     private static final float METEOR_MIDDLE_HEIGHT = 0.075f; //размеры маленького метеора
-    private static final int METEOR_MIDDLE_HP = 5; //количество жизней
+    private static final int METEOR_MIDDLE_HP = 4; //количество жизней
 
     //сложность метеора 3 (LARGE)
     private static final float METEOR_LARGE_HEIGHT = 0.08f; //размеры маленького метеора
-    private static final int METEOR_LARGE_HP = 10; //количество жизней
+    private static final int METEOR_LARGE_HP = 5; //количество жизней
 
-    private Vector2 meteorEasySpeed = new Vector2(0, -0.25f); //скорость метеора
-    private Vector2 meteorSmallSpeed = new Vector2(0, -0.2f); //скорость метеора
-    private Vector2 meteorMiddleSpeed = new Vector2(0, -0.15f); //скорость метеора
-    private Vector2 meteorLargeSpeed = new Vector2(0, -0.1f); //скорость метеора
+    private Vector2 meteorEasySpeed = new Vector2(0, - Rnd.nextFloat(0.2f, 0.3f)); //скорость метеора
+    private Vector2 meteorSmallSpeed = new Vector2(0, - Rnd.nextFloat(0.15f, 0.2f)); //скорость метеора
+    private Vector2 meteorMiddleSpeed = new Vector2(0, - Rnd.nextFloat(0.13f, 0.17f)); //скорость метеора
+    private Vector2 meteorLargeSpeed = new Vector2(0, - Rnd.nextFloat(0.10f, 0.15f)); //скорость метеора
+
 
     private TextureRegion[] meteorEasyRegions; //текстуры метеора
     private TextureRegion[] meteorSmallRegions; //текстуры метеора
@@ -42,7 +43,7 @@ public class MeteorsEmitter {
 
     private MeteorPool meteorPool;
 
-    private float generateInterval = 5f; //раз в 5 секунды появиться новый метеор
+    private float generateInterval = 2f; //раз в __ секунды появиться новый метеор
     private float generateTimer; //таймер
 
     private Rect worldBounds; //границы мира
