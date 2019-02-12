@@ -104,7 +104,7 @@ public class GameScreen extends Base2DScreen {
         messageGameOver = new MessageGameOver(atlas);
         startNewGameButton = new StartNewGameButton(atlas, this);
         this.font = new Font("fonts/starGameFont.fnt", "fonts/starGameFont.png");
-        this.font.setSize(0.03f); //настройка размеров шрифта
+        this.font.setSize(0.02f); //настройка размеров шрифта
         startNewGame();
     }
 
@@ -279,9 +279,9 @@ public class GameScreen extends Base2DScreen {
         sbFrags.setLength(0); //возвращаемся в начальную позицию
         sbHP.setLength(0); //возвращаемся в начальную позицию
         sbLevel.setLength(0); //возвращаемся в начальную позицию
-        font.draw(batch, sbFrags.append(FRAGS).append(frags), worldBounds.getLeft(), worldBounds.getTop());
-        font.draw(batch, sbHP.append(HP).append(mainShip.getHp()), worldBounds.getRight(), worldBounds.getTop(), Align.right); //в середине
-        font.draw(batch, sbLevel.append(LEVEL).append(enemyEmitter.getLevel()), worldBounds.pos.x, worldBounds.getTop(), Align.center);
+        font.draw(batch, sbFrags.append(FRAGS).append(frags), worldBounds.getLeft() + 0.01f, worldBounds.getTop() - 0.01f);
+        font.draw(batch, sbHP.append(HP).append(mainShip.getHp()), worldBounds.getRight() - 0.01f, worldBounds.getTop() - 0.01f, Align.right); //в середине
+        font.draw(batch, sbLevel.append(LEVEL).append(enemyEmitter.getLevel()), worldBounds.pos.x, worldBounds.getTop() - 0.01f, Align.center);
     }
 
     @Override
