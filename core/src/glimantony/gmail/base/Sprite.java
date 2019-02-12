@@ -110,7 +110,7 @@ public class Sprite extends Rect {
      * @param batch
      */
     public void draw(SpriteBatch batch, float angle){
-        batch.draw(
+        batch.draw( /*TODO здесь иногда вылитеает Exception in thread "LWJGL Application" java.lang.NullPointerException*/
                 regions[frame], //номер региона в текущем кадре
                 getLeft(), getBottom(), //координаты точки отрисовки (рисунок сместиться на половину ширины и высоты)
                 halfWidth, halfHeight, //координаты точки вращения (по центру)
