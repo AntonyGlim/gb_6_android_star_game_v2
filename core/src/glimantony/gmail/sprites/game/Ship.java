@@ -69,7 +69,7 @@ public class Ship extends Sprite {
 
     public void boom(){ //взрыв корабля
         Explosion explosion = explosionPool.obtain();
-        explosion.set(getHeight(), pos); //размеры корабля и его местоположение
+        explosion.set(getHeight(), pos, speed); //размеры корабля и его местоположение
     }
 
     /**
