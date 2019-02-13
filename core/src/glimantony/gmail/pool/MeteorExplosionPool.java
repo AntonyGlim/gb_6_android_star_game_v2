@@ -16,7 +16,7 @@ public class MeteorExplosionPool extends SpritesPool<Explosion> {
     private Sound explosionSound;
 
     public MeteorExplosionPool() {
-        this.explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.mp3")); //TODO поменять музыку
+        this.explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/stonesBoom.mp3")); //TODO поменять музыку
     }
 
     @Override
