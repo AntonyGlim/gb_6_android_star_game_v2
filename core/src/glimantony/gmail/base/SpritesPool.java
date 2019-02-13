@@ -46,13 +46,24 @@ public abstract class SpritesPool <T extends Sprite> {
     }
 
     /**
-     * Рисуем пули
+     * Рисуем о-кт
      * @param batch
      */
     public void drawActiveSprites(SpriteBatch batch) {
         for (int i = 0; i < activeObjects.size(); i++) {
             T sprite = activeObjects.get(i);
             sprite.draw(batch);
+        }
+    }
+
+    /**
+     * Рисуем о-кт с вращением
+     * @param batch
+     */
+    public void drawActiveSprites(SpriteBatch batch, float angle) {
+        for (int i = 0; i < activeObjects.size(); i++) {
+            T sprite = activeObjects.get(i);
+            sprite.draw(batch, angle);
         }
     }
 

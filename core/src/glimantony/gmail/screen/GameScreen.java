@@ -15,9 +15,12 @@ import javax.swing.GroupLayout;
 
 import glimantony.gmail.base.Base2DScreen;
 import glimantony.gmail.math.Rect;
+import glimantony.gmail.math.Rnd;
 import glimantony.gmail.pool.BulletPool;
 import glimantony.gmail.pool.EnemyPool;
 import glimantony.gmail.pool.ExplosionPool;
+import glimantony.gmail.pool.MeteorExplosionPool;
+import glimantony.gmail.pool.MeteorPool;
 import glimantony.gmail.sprites.Background;
 import glimantony.gmail.sprites.Star;
 import glimantony.gmail.sprites.game.Bullet;
@@ -25,9 +28,11 @@ import glimantony.gmail.sprites.game.Enemy;
 import glimantony.gmail.sprites.game.Explosion;
 import glimantony.gmail.sprites.game.MainShip;
 import glimantony.gmail.sprites.game.MessageGameOver;
+import glimantony.gmail.sprites.game.Meteor;
 import glimantony.gmail.sprites.game.StartNewGameButton;
 import glimantony.gmail.utils.EnemyEmitter;
 import glimantony.gmail.utils.Font;
+import glimantony.gmail.utils.MeteorsEmitter;
 
 public class GameScreen extends Base2DScreen {
 
@@ -38,6 +43,7 @@ public class GameScreen extends Base2DScreen {
     private enum State {PLAYING, GAME_OVER} //делаем 2 состояния для экрана
 
     private TextureAtlas atlas;
+    private TextureAtlas atlasMeteors; //атлас метеоритов
     private Texture bg; //фон
     private Background background; //обертка для фона
     private Star[] stars; //массив звезд
@@ -49,8 +55,12 @@ public class GameScreen extends Base2DScreen {
     private BulletPool bulletPool; //пул пуль
     private ExplosionPool explosionPool; //пул взрыва
     private EnemyPool enemyPool; //пул вражеских кораблей
+    private MeteorPool meteorPool; //пул метеоров
+    private MeteorExplosionPool meteorExplosionPool; //пул взрывов метеора
 
     private EnemyEmitter enemyEmitter; //фабрика врагов
+    private MeteorsEmitter meteorsEmitter; //фабрика
+    private float meteorAngle = 0; //угол поворота метеорита
 
     private Music music; //фоновая музыка
 
@@ -70,6 +80,7 @@ public class GameScreen extends Base2DScreen {
         bg = new Texture("textures/backgrounds/spase_stars_background.jpg");
         background = new Background(new TextureRegion(bg));
         atlas = new TextureAtlas("textures/mainAtlas.tpack"); //инициализируем конфиг для атласа
+        atlasMeteors = new TextureAtlas("textures/meteorsAtlas.tpack");
         stars = new Star[64]; //звезда настраивает себя сама
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(atlas);
@@ -77,20 +88,23 @@ public class GameScreen extends Base2DScreen {
 
         bulletPool = new BulletPool();
         explosionPool = new ExplosionPool(atlas);
+        meteorExplosionPool = new MeteorExplosionPool();
         mainShip = new MainShip(atlas, bulletPool, explosionPool, worldBounds);
         enemyPool = new EnemyPool(bulletPool, worldBounds, explosionPool, mainShip);
+        meteorPool = new MeteorPool(worldBounds, meteorExplosionPool, mainShip);
 
         enemyEmitter = new EnemyEmitter(atlas, enemyPool, worldBounds);
+        meteorsEmitter = new MeteorsEmitter(atlasMeteors, meteorPool, worldBounds);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music_1.mp3")); //подключаем музыку
         music.setLooping(true); //сделаем повторяющейся
-        music.setVolume(0.8f); //громкость музыки
+        music.setVolume(0.5f); //громкость музыки
         music.play();
 
         messageGameOver = new MessageGameOver(atlas);
         startNewGameButton = new StartNewGameButton(atlas, this);
         this.font = new Font("fonts/starGameFont.fnt", "fonts/starGameFont.png");
-        this.font.setSize(0.03f); //настройка размеров шрифта
+        this.font.setSize(0.02f); //настройка размеров шрифта
         startNewGame();
     }
 
@@ -112,12 +126,15 @@ public class GameScreen extends Base2DScreen {
             stars[i].update(delta);
         }
         explosionPool.updateActiveSprites(delta); //чтобы нпроигрывался взрыв
+        meteorExplosionPool.updateActiveSprites(delta);
         switch (state){
             case PLAYING:
                 mainShip.update(delta);
                 bulletPool.updateActiveSprites(delta); //чтобы наши пули смогли лететь
                 enemyPool.updateActiveSprites(delta); //обновление пула врагов
                 enemyEmitter.generate(delta, frags); //генерация врагов
+                meteorPool.updateActiveSprites(delta); //обновление пула врагов
+                meteorsEmitter.generate(delta, frags); //генерация врагов
                 break;
             case GAME_OVER:
                 break;
@@ -143,6 +160,19 @@ public class GameScreen extends Base2DScreen {
                 }
             }
 
+            //проверим пересечение нашег корабля с метеорами
+            List<Meteor> meteorList = meteorPool.getActiveObjects();//список всех врагов находящихся на экране
+            for (Meteor meteor : meteorList) {
+                if (meteor.isDestroied())
+                    continue; //если корабль уже уничтожен, то он не принимает участия в игровом процессе
+                float minDistanceBetweenShips = meteor.getHalfHeight() + mainShip.getHalfHeight(); //произвольно рассчитываем
+                if (meteor.pos.dst2(mainShip.pos) <= minDistanceBetweenShips * minDistanceBetweenShips) {
+                    meteor.destroy();
+                    mainShip.damage((int) Rnd.nextFloat(1, 10));
+                    return;
+                }
+            }
+
             //проверим пересечение наших пуль с вражескими кораблями
             List<Bullet> bulletList = bulletPool.getActiveObjects();//список всех пуль находящихся на экране
             for (Enemy enemy : enemyList) {
@@ -155,6 +185,25 @@ public class GameScreen extends Base2DScreen {
                     if (enemy.isBulletCollision(bullet)) { //если пуля в пределах корабля (по центру)
                         enemy.damage(mainShip.getBulletDamage()); //противнику наноситься урон, он меняет цвет
                         if (enemy.isDestroied()){
+                            frags++;
+                        }
+                        bullet.destroy(); //уничтожаем пулю
+                    }
+                }
+            }
+
+            //проверим пересечение наших пуль с метеорами
+            bulletList = bulletPool.getActiveObjects();//список всех пуль находящихся на экране
+            for (Meteor meteor : meteorList) {
+                if (meteor.isDestroied())
+                    continue; //если корабль уже уничтожен, то он не принимает участия в игровом процессе
+                for (Bullet bullet : bulletList) {
+                    if (bullet.getOwnerOfBullet() != mainShip || bullet.isDestroied()) { //если пуля не наша или уничтожена
+                        continue;
+                    }
+                    if (meteor.isBulletCollision(bullet)) { //если пуля в пределах корабля (по центру)
+                        meteor.damage(mainShip.getBulletDamage()); //противнику наноситься урон, он меняет цвет
+                        if (meteor.isDestroied()){
                             frags++;
                         }
                         bullet.destroy(); //уничтожаем пулю
@@ -184,7 +233,9 @@ public class GameScreen extends Base2DScreen {
         }
         bulletPool.freeAllDestroiedSprites();
         explosionPool.freeAllDestroiedSprites();
+        meteorExplosionPool.freeAllDestroiedSprites();
         enemyPool.freeAllDestroiedSprites();
+        meteorPool.freeAllDestroiedSprites();
     }
 
     /**
@@ -206,6 +257,8 @@ public class GameScreen extends Base2DScreen {
                 mainShip.draw(batch);
                 bulletPool.drawActiveSprites(batch);
                 enemyPool.drawActiveSprites(batch);
+                meteorPool.drawActiveSprites(batch, meteorAngle++);
+                if (meteorAngle == 359) meteorAngle = 0;
                 break;
             case GAME_OVER:
                 messageGameOver.draw(batch);
@@ -214,6 +267,7 @@ public class GameScreen extends Base2DScreen {
         }
 
         explosionPool.drawActiveSprites(batch); //рисуется в любом случае (поверх остальных О-ов)
+        meteorExplosionPool.drawActiveSprites(batch);
         printInfo(); //вызываем перед end т.к. он тоже работает с batch
         batch.end();
     }
@@ -225,9 +279,9 @@ public class GameScreen extends Base2DScreen {
         sbFrags.setLength(0); //возвращаемся в начальную позицию
         sbHP.setLength(0); //возвращаемся в начальную позицию
         sbLevel.setLength(0); //возвращаемся в начальную позицию
-        font.draw(batch, sbFrags.append(FRAGS).append(frags), worldBounds.getLeft(), worldBounds.getTop());
-        font.draw(batch, sbHP.append(HP).append(mainShip.getHp()), worldBounds.getRight(), worldBounds.getTop(), Align.right); //в середине
-        font.draw(batch, sbLevel.append(LEVEL).append(enemyEmitter.getLevel()), worldBounds.pos.x, worldBounds.getTop(), Align.center);
+        font.draw(batch, sbFrags.append(FRAGS).append(frags), worldBounds.getLeft() + 0.01f, worldBounds.getTop() - 0.01f);
+        font.draw(batch, sbHP.append(HP).append(mainShip.getHp()), worldBounds.getRight() - 0.01f, worldBounds.getTop() - 0.01f, Align.right); //в середине
+        font.draw(batch, sbLevel.append(LEVEL).append(enemyEmitter.getLevel()), worldBounds.pos.x, worldBounds.getTop() - 0.01f, Align.center);
     }
 
     @Override
@@ -246,7 +300,9 @@ public class GameScreen extends Base2DScreen {
         atlas.dispose();
         bulletPool.dispose();
         explosionPool.dispose();
+        meteorExplosionPool.dispose();
         enemyPool.dispose();
+        meteorPool.dispose();
         mainShip.dispose();
         music.dispose();
         font.dispose();
@@ -303,6 +359,8 @@ public class GameScreen extends Base2DScreen {
         //почистим все активные о-ты в пулах, если они остались
         bulletPool.freeAllActiveObjects();
         enemyPool.freeAllActiveObjects();
+        meteorPool.freeAllActiveObjects();
         explosionPool.freeAllActiveObjects();
+        meteorExplosionPool.freeAllActiveObjects();
     }
 }

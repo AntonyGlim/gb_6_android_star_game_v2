@@ -104,6 +104,22 @@ public class Sprite extends Rect {
         );
     }
 
+    /**
+     * Рисование самого себя. Отрисовка каждого о-та реализуется в самом о-те
+     * В методе добавлено вращение для метеоритов
+     * @param batch
+     */
+    public void draw(SpriteBatch batch, float angle){
+        batch.draw( /*TODO здесь иногда вылитеает Exception in thread "LWJGL Application" java.lang.NullPointerException*/
+                regions[frame], //номер региона в текущем кадре
+                getLeft(), getBottom(), //координаты точки отрисовки (рисунок сместиться на половину ширины и высоты)
+                halfWidth, halfHeight, //координаты точки вращения (по центру)
+                getWidth(), getHeight(), //ширина и высота
+                scale, scale, //масштабирование по x и y (одинаковое)
+                angle //угол на который мы можем повернуть наш спрайт
+        );
+    }
+
     public float getAngle() {
         return angle;
     }

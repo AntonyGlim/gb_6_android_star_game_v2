@@ -1,0 +1,159 @@
+
+meteorsAtlas.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+meteor_1
+  rotate: false
+  xy: 1, 368
+  size: 308, 143
+  orig: 308, 143
+  offset: 0, 0
+  index: 33
+meteor_large_2
+  rotate: false
+  xy: 1, 228
+  size: 302, 138
+  orig: 302, 138
+  offset: 0, 0
+  index: 55
+meteor_large_3
+  rotate: false
+  xy: 311, 369
+  size: 296, 142
+  orig: 296, 142
+  offset: 0, 0
+  index: 77
+meteor_large_4
+  rotate: false
+  xy: 1, 89
+  size: 298, 137
+  orig: 298, 137
+  offset: 0, 0
+  index: 22
+meteor_large_5
+  rotate: false
+  xy: 609, 367
+  size: 286, 144
+  orig: 286, 144
+  offset: 0, 0
+  index: 44
+meteor_large_6
+  rotate: false
+  xy: 311, 222
+  size: 276, 145
+  orig: 276, 145
+  offset: 0, 0
+  index: 66
+meteor_large_7
+  rotate: false
+  xy: 589, 216
+  size: 274, 149
+  orig: 274, 149
+  offset: 0, 0
+  index: 11
+meteor_2
+  rotate: false
+  xy: 1, 33
+  size: 128, 54
+  orig: 128, 54
+  offset: 0, 0
+  index: 55
+meteor_middl_2
+  rotate: false
+  xy: 897, 454
+  size: 124, 57
+  orig: 124, 57
+  offset: 0, 0
+  index: 77
+meteor_middl_3
+  rotate: false
+  xy: 897, 387
+  size: 116, 65
+  orig: 116, 65
+  offset: 0, 0
+  index: 88
+meteor_middl_4
+  rotate: false
+  xy: 131, 31
+  size: 124, 56
+  orig: 124, 56
+  offset: 0, 0
+  index: 99
+meteor_middl_5
+  rotate: false
+  xy: 301, 164
+  size: 120, 56
+  orig: 120, 56
+  offset: 0, 0
+  index: 22
+meteor_middl_6
+  rotate: false
+  xy: 301, 106
+  size: 120, 56
+  orig: 120, 56
+  offset: 0, 0
+  index: 33
+meteor_middl_7
+  rotate: false
+  xy: 423, 166
+  size: 116, 54
+  orig: 116, 54
+  offset: 0, 0
+  index: 44
+meteor_middl_9
+  rotate: false
+  xy: 423, 98
+  size: 104, 66
+  orig: 104, 66
+  offset: 0, 0
+  index: 66
+meteor_middl_0
+  rotate: false
+  xy: 897, 328
+  size: 104, 57
+  orig: 104, 57
+  offset: 0, 0
+  index: 11
+meteor_small_1
+  rotate: false
+  xy: 69, 1
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: 44
+meteor_small_2
+  rotate: false
+  xy: 301, 74
+  size: 64, 30
+  orig: 64, 30
+  offset: 0, 0
+  index: 11
+meteor_small_3
+  rotate: false
+  xy: 865, 296
+  size: 64, 30
+  orig: 64, 30
+  offset: 0, 0
+  index: 66
+meteor_small_4
+  rotate: false
+  xy: 865, 261
+  size: 60, 33
+  orig: 60, 33
+  offset: 0, 0
+  index: 22
+meteor_3
+  rotate: false
+  xy: 865, 224
+  size: 56, 35
+  orig: 56, 35
+  offset: 0, 0
+  index: 55
+meteor_4
+  rotate: false
+  xy: 1, 1
+  size: 66, 30
+  orig: 66, 30
+  offset: 0, 0
+  index: 33

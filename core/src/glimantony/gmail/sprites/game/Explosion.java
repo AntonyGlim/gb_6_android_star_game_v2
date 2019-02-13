@@ -12,14 +12,15 @@ import glimantony.gmail.base.Sprite;
  */
 public class Explosion extends Sprite {
 
-    private float animatedInterval = 0.017f; //интервал смены кадров анимации
+    private float animatedInterval; //интервал смены кадров анимации
     private float animatedTimer; //интервал смены кадров анимации
 
     private Sound explosionSound;
 
-    public Explosion(TextureRegion region, int rows, int cols, int frames, Sound explosionSound) {
+    public Explosion(TextureRegion region, int rows, int cols, int frames, Sound explosionSound, float animatedInterval) {
         super(region, rows, cols, frames);
         this.explosionSound = explosionSound;
+        this.animatedInterval = animatedInterval;
     }
 
     /**
