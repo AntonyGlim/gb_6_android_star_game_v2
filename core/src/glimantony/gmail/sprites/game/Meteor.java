@@ -90,6 +90,6 @@ public class Meteor extends Ship /*TODO временная мера, испра�
     @Override
     public void boom() {
         Explosion explosion = meteorExplosionPool.obtain();
-        explosion.set(getHeight(), pos); //размеры корабля и его местоположение
+        explosion.set(getHeight() * 3f, pos); //размеры метеора и его местоположение
     }
 }

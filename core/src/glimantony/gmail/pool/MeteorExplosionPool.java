@@ -21,7 +21,7 @@ public class MeteorExplosionPool extends SpritesPool<Explosion> {
 
     @Override
     protected Explosion newObject() {
-        return new Explosion(region, 3, 3, 9, explosionSound); //можно убедиться в этом открыв атлас
+        return new Explosion(region, 3, 3, 9, explosionSound, 0.035f); //можно убедиться в этом открыв атлас
     }
 
     @Override
