@@ -45,7 +45,7 @@ public class Meteor extends Ship /*TODO временная мера, испра�
 
         speed.set(descentSpeed);
 //        state = Meteor.State.DESCENT; //изначально метеор в состоянии подхода к экрану
-        state = Meteor.State.FIGHT; //изначально метеор в состоянии подхода к экрану
+        state = Meteor.State.FIGHT;
     }
 
     @Override
@@ -90,6 +90,6 @@ public class Meteor extends Ship /*TODO временная мера, испра�
     @Override
     public void boom() {
         Explosion explosion = meteorExplosionPool.obtain();
-        explosion.set(getHeight() * 3f, pos); //размеры метеора и его местоположение
+        explosion.set(getHeight() * 3f, pos, speed); //размеры метеора и его местоположение
     }
 }
