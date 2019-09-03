@@ -134,7 +134,7 @@ public class GameScreen extends Base2DScreen {
                 enemyPool.updateActiveSprites(delta); //обновление пула врагов
                 enemyEmitter.generate(delta, frags); //генерация врагов
                 meteorPool.updateActiveSprites(delta); //обновление пула врагов
-                meteorsEmitter.generate(delta, frags); //генерация врагов
+                meteorsEmitter.generate(delta, frags); //генерация метеоритов
                 break;
             case GAME_OVER:
                 break;
@@ -164,7 +164,7 @@ public class GameScreen extends Base2DScreen {
             List<Meteor> meteorList = meteorPool.getActiveObjects();//список всех врагов находящихся на экране
             for (Meteor meteor : meteorList) {
                 if (meteor.isDestroied())
-                    continue; //если корабль уже уничтожен, то он не принимает участия в игровом процессе
+                    continue; //если метеорит уже уничтожен, то он не принимает участия в игровом процессе
                 float minDistanceBetweenShips = meteor.getHalfHeight() + mainShip.getHalfHeight(); //произвольно рассчитываем
                 if (meteor.pos.dst2(mainShip.pos) <= minDistanceBetweenShips * minDistanceBetweenShips) {
                     meteor.destroy();
