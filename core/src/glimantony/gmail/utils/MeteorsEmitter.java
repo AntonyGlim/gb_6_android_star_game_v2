@@ -101,7 +101,7 @@ public class MeteorsEmitter {
                         METEOR_MIDDLE_HEIGHT,
                         METEOR_MIDDLE_HP
                 ); //настройка метеора
-            } else if (meteorType > 0.9 && meteorType <= 0.99){ //вероятность 10% - огромный метеор
+            } else { //вероятность 10% - огромный метеор
                 meteor.set(
                         meteorLargeRegions,
                         meteorLargeSpeed,
@@ -110,7 +110,7 @@ public class MeteorsEmitter {
                 ); //настройка корабля
             }
             meteor.pos.x = Rnd.nextFloat(worldBounds.getLeft() + meteor.getHalfWidth(), worldBounds.getRight() - meteor.getHalfWidth()); //позицыя по Х
-            meteor.setBottom(worldBounds.getTop()); //позицыя по Y
+            meteor.setBottom(worldBounds.getTop()); //позиция по Y
         }
     }
 
